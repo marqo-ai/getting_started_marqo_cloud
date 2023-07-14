@@ -1,0 +1,27 @@
+/* CSS */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+  border: 3px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+  /* margin-top: 3rem;
+    margin-bottom: 3rem; */
+}
+
+.search-bar-input {
+  flex-grow: 1;
+  border: none;
+  padding: 10px;
+}
+
+.search-button {
+  background-color: #00ffaa;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}

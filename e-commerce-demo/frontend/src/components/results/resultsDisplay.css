@@ -1,0 +1,30 @@
+/* CSS */
+.result-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh; /* Adjust according to your needs */
+}
+
+.result-display.loading {
+  display: flex;
+}
+
+.result-display .error {
+  grid-column: span 4;
+  color: red;
+  font-size: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .result-display {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .result-display .error {
+    grid-column: span 2;
+  }
+}
