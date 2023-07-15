@@ -1,27 +1,38 @@
-/* CSS */
 .search-bar {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   max-width: 1200px;
   width: 90%;
   margin: 0 auto;
-  border: 3px solid black;
+  border: 2px solid black;
   border-radius: 10px;
   overflow: hidden;
-  /* margin-top: 3rem;
-    margin-bottom: 3rem; */
 }
 
 .search-bar-input {
-  flex-grow: 1;
-  border: none;
-  padding: 10px;
+  border: 1px solid black;
+  min-height: 40px;
 }
 
 .search-button {
   background-color: #00ffaa;
   border: none;
-  padding: 10px;
   cursor: pointer;
+  min-height: 40px;
+}
+
+@media (min-width: 800px) {
+  .search-bar {
+    flex-direction: row;
+  }
+
+  .search-bar-input {
+    flex-grow: 1;
+  }
+
+  .search-button {
+    flex-grow: 0;
+  }
 }

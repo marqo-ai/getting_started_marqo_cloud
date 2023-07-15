@@ -54,7 +54,7 @@ const ResultsDisplay = ({
         query: query,
         moreOf: moreOf,
         lessOf: lessOf,
-        limit: 50,
+        limit: 100,
       }),
     })
       .then((res) => {
