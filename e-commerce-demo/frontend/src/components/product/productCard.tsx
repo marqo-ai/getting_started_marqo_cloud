@@ -13,7 +13,6 @@ interface Product {
 
 const ProductCard = ({ product }: { product: Product }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  console.log("Product card for", product.name);
   const handleImageLoad = () => {
     setIsLoaded(true);
   };

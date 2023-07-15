@@ -1,27 +1,22 @@
+
+
 # Stage 1: Build the frontend
-FROM node:14 as frontend_builder
+FROM node:18 as frontend_builder
+COPY frontend /app/frontend
 
 WORKDIR /app/frontend
-
-COPY frontend/package*.json ./
-RUN npm install
-
-COPY frontend ./
-RUN npm run build
+RUN npm ci
+RUN REACT_APP_ENV=production npm run build
 
 # Stage 2: Setup the backend and serve the frontend
-FROM python:3.9-slim-buster
+FROM python:3.11-slim-buster
+COPY backend /app/backend
+WORKDIR /app/backend
+RUN pip3 install --no-cache-dir -r requirements.txt
+ENV PYTHONPATH /backend
 
+# Stage 3: Pull it all together
 WORKDIR /app
-
-# Copy the backend requirements.txt file to the container
-COPY backend/requirements.txt ./
-
-# Install backend dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the backend code to the container
-COPY backend ./backend
 
 # Copy the frontend build from the previous stage
 COPY --from=frontend_builder /app/frontend/build ./frontend/build
@@ -48,4 +43,4 @@ CMD sed -i "s|MARQO_API_URL|$MARQO_API_URL|g" /app/backend/app.py && \
     sed -i "s|MARQO_API_KEY|$MARQO_API_KEY|g" /app/backend/app.py && \
     sed -i "s|MARQO_INDEX|$MARQO_INDEX|g" /app/backend/app.py && \
     service nginx start && \
-    gunicorn --bind 127.0.0.1:5000 -w 2 backend.app:app
+    gunicorn -b 127.0.0.1:5000 backend.app:app --workers 2
