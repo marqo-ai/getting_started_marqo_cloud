@@ -1,0 +1,9 @@
+beautifulsoup4
+Flask
+Flask_Cors
+openai
+marqo
+python-dotenv
+Requests
+black
+pydantic

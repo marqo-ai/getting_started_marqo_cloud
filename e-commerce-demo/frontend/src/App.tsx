@@ -1,15 +1,14 @@
-import React from "react";
-import { useState } from "react";
-import logo from "./logo.svg";
-import ResultsDisplay from "./components/results/resultsDisplay";
-import SearchBar from "./components/search/searchBar";
-import "./App.css";
-import Logo from "./components/logo/logo";
+import React from 'react';
+import { useState } from 'react';
+import ResultsDisplay from './components/results/resultsDisplay';
+import SearchBar from './components/search/searchBar';
+import './App.css';
+import Logo from './components/logo/logo';
 
 function App() {
-  const [query, setQuery] = useState<string>("");
-  const [moreOf, setMoreOf] = useState<string>("");
-  const [lessOf, setLessOf] = useState<string>("");
+  const [query, setQuery] = useState<string>('');
+  const [moreOf, setMoreOf] = useState<string>('');
+  const [lessOf, setLessOf] = useState<string>('');
 
   return (
     <div className="App">

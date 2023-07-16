@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { ThreeDots } from "react-loader-spinner";
-import ProductCard from "../product/productCard";
-import { API_BASE_URL } from "../../constants";
-import "./resultsDisplay.css";
+import { useEffect, useState } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
+import ProductCard from '../product/productCard';
+import { API_BASE_URL } from '../../constants';
+import './resultsDisplay.css';
 
 interface searchResult {
   id: string;
@@ -11,10 +11,7 @@ interface searchResult {
   image_url: string;
 }
 
-const usePromiseTracker = (
-  promiseCreator: () => Promise<any>,
-  deps: React.DependencyList,
-) => {
+const usePromiseTracker = (promiseCreator: () => Promise<any>, deps: React.DependencyList) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -44,11 +41,11 @@ const ResultsDisplay = ({
       return Promise.resolve(); // If the query is empty, immediately resolve the promise
     }
 
-    return fetch(API_BASE_URL + "/search_marqo", {
-      method: "POST",
+    return fetch(API_BASE_URL + '/search_marqo', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
       },
       body: JSON.stringify({
         query: query,
@@ -64,12 +61,12 @@ const ResultsDisplay = ({
         return res.json();
       })
       .then((res) => {
-        setSearchResults(res["results"]);
+        setSearchResults(res['results']);
       });
   }, [query, moreOf, lessOf]);
 
   return (
-    <div className={`result-display ${promiseInProgress ? "loading" : ""}`}>
+    <div className={`result-display ${promiseInProgress ? 'loading' : ''}`}>
       {promiseInProgress ? (
         <ThreeDots color="#00ffaa" height="100" width="100" />
       ) : error ? (

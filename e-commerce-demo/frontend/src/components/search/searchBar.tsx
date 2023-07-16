@@ -1,14 +1,14 @@
-import { useState } from "react";
-import "./searchBar.css";
+import { useState } from 'react';
+import './searchBar.css';
 
 const SearchBar = ({
   onSearch,
 }: {
   onSearch: (query: string, moreOf: string, lessOf: string) => void;
 }) => {
-  const [query, setQuery] = useState<string>("");
-  const [moreOf, setMoreOf] = useState<string>("");
-  const [lessOf, setLessOf] = useState<string>("");
+  const [query, setQuery] = useState<string>('');
+  const [moreOf, setMoreOf] = useState<string>('');
+  const [lessOf, setLessOf] = useState<string>('');
 
   const handleSubmit = () => {
     onSearch(query, moreOf, lessOf);
@@ -27,7 +27,7 @@ const SearchBar = ({
   };
 
   const handleKeyPress = (e: any) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       handleSubmit();
     }
   };

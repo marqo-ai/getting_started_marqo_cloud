@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Card, Image } from "antd";
-import "./productCard.css";
+import { useState } from 'react';
+import { Card, Image } from 'antd';
+import './productCard.css';
 
 const { Meta } = Card;
 
@@ -18,7 +18,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   };
 
   return (
-    <div id={product.id} className={`product-card ${isLoaded ? "loaded" : ""}`}>
+    <div id={product.id} className={`product-card ${isLoaded ? 'loaded' : ''}`}>
       <Card
         hoverable
         style={{ width: 240 }}
