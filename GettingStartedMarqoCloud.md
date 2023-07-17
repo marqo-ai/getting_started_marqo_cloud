@@ -184,7 +184,7 @@ def search(
     query: str, more_of: str, less_of: str, limit: int = 50
 ) -> List[SearchResult]:
     ...
-    
+
     result = MQ.index(index).search(
         composed_query, 
         limit=limit,

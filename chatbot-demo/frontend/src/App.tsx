@@ -14,10 +14,10 @@ function App() {
         </div>
         <h3>Chat</h3>
         <ChatWindow />
-        <h3>Add Knowledge</h3>
+        {/* <h3>Add Knowledge</h3>
         <KnowledgeAdder />
         <h3>Add Webpage</h3>
-        <URLAdder />
+        <URLAdder /> */}
       </div>
     </main>
   );

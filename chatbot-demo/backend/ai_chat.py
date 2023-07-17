@@ -2,16 +2,18 @@ import openai
 from data_models import HumanMessage, AIMessage, SystemMessage
 import json
 from utils import remove_responses
-from knowledge_store import MarqoKnowledgeStore
+from marqo_search import search
 from typing import List, Dict, Generator
 
 from dotenv import load_dotenv
 
 load_dotenv()
 
+GPT_MODEL = "gpt-3.5-turbo-0613"
+
 FUNCTIONS = [
     {
-        "name": "search_marqo",
+        "name": "search",
         "description": "This is a search engine, use it when the user instructs you to search in any way. Also use it for organisational knowledge or personal information.",
         "parameters": {
             "type": "object",
@@ -25,15 +27,6 @@ FUNCTIONS = [
         },
     },
 ]
-
-
-def search_marqo(query: str, mks: MarqoKnowledgeStore, limit: int) -> str:
-    try:
-        results = mks.query_for_content(query, limit=limit if limit is not None else 4)
-        return json.dumps(results)
-    except Exception as e:
-        return {"marqo_search_error": e}
-
 
 def format_chat(conversation: List[str], user_input: str) -> List[Dict[str, str]]:
     llm_conversation = [
@@ -61,11 +54,11 @@ def append_function_deltas(
 
 
 def converse(
-    user_input: str, conversation: List[str], mks: MarqoKnowledgeStore, limit: int
+    user_input: str, conversation: List[str], limit: int
 ) -> Generator:
     conversation = format_chat(conversation, user_input)
     stream1 = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-0613",
+        model=GPT_MODEL,
         messages=conversation,
         functions=FUNCTIONS,
         function_call="auto",
@@ -108,14 +101,14 @@ def converse(
         function_name = message["function_call"]["name"]
 
         arguments = json.loads(message["function_call"]["arguments"])
-        function_response = search_marqo(
-            query=arguments.get("query"), mks=mks, limit=limit
+        function_response = search(
+            query=arguments.get("query"), limit=limit
         )
         yield "\n```curl\nResponse:\n".encode("utf-8")
         yield f"{json.dumps(function_response, indent=4)}\n```\n".encode("utf-8")
 
         stream2 = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo-0613",
+            model=GPT_MODEL,
             messages=[
                 *conversation,
                 message,
