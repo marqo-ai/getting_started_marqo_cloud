@@ -1,12 +1,12 @@
 
 
 # Stage 1: Build the frontend
-FROM node:18 as frontend_builder
-COPY frontend /app/frontend
+# FROM node:18 as frontend_builder
+# COPY frontend /app/frontend
 
-WORKDIR /app/frontend
-RUN npm ci
-RUN REACT_APP_ENV=production npm run build
+# WORKDIR /app/frontend
+# RUN npm ci
+# RUN REACT_APP_ENV=production npm run build
 
 # Stage 2: Setup the backend and serve the frontend
 FROM python:3.11-slim-buster
@@ -19,7 +19,9 @@ ENV PYTHONPATH /backend
 WORKDIR /app
 
 # Copy the frontend build from the previous stage
-COPY --from=frontend_builder /app/frontend/build ./frontend/build
+# COPY --from=frontend_builder /app/frontend/build ./frontend/build
+
+COPY ./frontend/build /app/frontend/build 
 
 # Install Nginx
 RUN apt-get update && apt-get install -y nginx

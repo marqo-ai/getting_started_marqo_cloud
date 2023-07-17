@@ -57,6 +57,15 @@ You should see output along the lines of
 
 ## Adding other people to the account (optional)
 
+# Marqo Demo Applications
+
+The following demo applications are a good way to get started building with your new Marqo cloud account! The applications are stored in a getting started repo, you can get the code by cloning it.
+
+```
+git clone https://github.com/marqo-ai/getting_started_marqo_cloud.git
+```
+
+
 # Image Search Application Quickstart
 
 In this tutorial we will build an image search application using Marqo! We will start with an existing code base and then walk through how to customise the behaviour.
@@ -78,37 +87,52 @@ Clone the repository and install the requirements.
 ```
 git clone ""
 cd ""
-python3 -m venv venv
+```
+
+The first step here is to index the data for the demo, the script is ready to go for you - you just need to set the environment variables for your Marqo endpoint and API key. 
+
+```
+export MARQO_API_URL="<your index url>"
+export MARQO_API_KEY="<your api key>"
+export MARQO_INDEX="<your index name>"
+```
+
+You can then index the data by running the following script.
+```
+python index_data.py
+```
+This script will index the data and log the document ids that have been indexed as it goes. A progress bar will show where it is up to. Indexing all 250,000 products will take a while so don't wait for it to finish to continue with the tutorial, just let it work away in the background. 
+
+Open up a couple of new terminals to continue on.
+
+Next we want to start the backend webserver. This webserver acts as an intermediate between Marqo and the UI. It will take the search query from the UI and send it to Marqo, it will then take the results from Marqo and send them back to the UI. This lets us keep our API key secret and also lets us do some pre and post processing of the data. This pattern is typical of many application and can be implemented in any language that can make HTTP requests. In this demo we use Python and Flask however you could use almost any language you like or implement this via serverless functions in the cloud.
+
+In one of your terminals navigate to the ./e-commerce-demo/backend directory and create a virtual environment for the backend.
+
+```
+export MARQO_API_URL="<your index url>"
+export MARQO_API_KEY="<your api key>"
+export MARQO_INDEX="<your index name>"
+
+python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Onces we have the project setup we can run the webserver to connect to our Marqo endpoint. We will need to set the environment variables for the endpoint and the API key.
-
-Create a `.env` file and edit `MARQO_ENDPOINT` and `MARQO_API_KEY` like so
-```
-MARQO_ENDPOINT=<your endpoint url>
-MARQO_API_KEY=<your api key>
-```
-
-Once this is done we can begin indexing our data. We will use the `index_data.py` script to index our data. This script will index the data and log the document ids that have been indexed as it goes. A progress bar will show where it is up to. Indexing all 250,000 products will take a while so don't wait for it to finish to continue with the tutorial, just let it work away in the background.
-
-Open a new terminal in the same directory and activate the virtual environment again.
-```
-source venv/bin/activate
-```
-
 We can now run the webserver for the backend.
 ```
-python3 app.py
+python app.py
 ```
 
-While that is running we can open another terminal in the same directory and set up the front end.
+In your other terminal we will start the frontend. For this demo the frontend is written using ReactJS and TypeScript. This app makes requests to the Flask server when searches are made, the results hydrate the UI. Navigate to the ./e-commerce-demo/frontend directory and install the dependencies and start the frontend.
 
 ```
-cd frontend
-npm install
-npm run serve
+npm i
+```
+
+We can then run the development server with:
+```
+npm run start
 ```
 
 ### Experiment
@@ -120,7 +144,116 @@ Here are some searches to try out:
 
 ### Customise (optional)
 
-We can make changes to the code to change how the search behaves. In this section we will list some changes that you can experiment with the customise the search, changes to the beckend code will automatically update the server.
+We can make changes to the code to change how the search behaves. In this section we will list some changes that you can experiment with the customise the search, changes to the backend code will automatically update the server.
+
+#### Updating query construction
+
+Open up `.e-commerce-demo/backend/marqo_search.py`.
+
+The `compose_query` function is where we construct the query and its weights for Marqo. This is what enables for "more of this and less of that" style searches in the UI.
+
+```python
+def compose_query(query: str, more_of: str, less_of: str) -> Dict[str, float]:
+    composed_query = {
+        query: 1.0,
+    }
+    if more_of:
+        composed_query[more_of] = 0.5
+    if less_of:
+        composed_query[less_of] = -0.75
+
+    return composed_query
+```
+
+You can experiment with these weights to see how they impact your searches. For example, if you want to make the `more_of` term more important you can increase its weight from `0.5` to `0.75`.
+
+You could also add prompting into the query, for example you could force "higher quality" images in your results by adding `composed_query["high quality, high resolution"] = 0.2` to the query.
+
+Or perhaps you want to supress some of the stranger AI generated images in the dataset, you could add `composed_query["weird, deformed, AI generated"] = -0.3` to the query.
+
+These prompting stratergies are a powerful way to customise your search experience.
+
+#### Adding score modifiers
+
+Marqo support score modifiers, these allow you to change to ranking of the results using attributes of the documents. For example, you could boost the score for results where the seller is reputible or where the product is popular.
+
+For the demo we can boost works using their aesthetic score. In the `search` function we can add score modifiers as follows:
+
+```python
+def search(
+    query: str, more_of: str, less_of: str, limit: int = 50
+) -> List[SearchResult]:
+    ...
+    
+    result = MQ.index(index).search(
+        composed_query, 
+        limit=limit,
+        score_modifiers = {
+            "add_to_score": 
+                [{"field_name": "aesthetic_score", "weight" : 0.2}] 
+            }
+    )
+    
+    ...
+```
+
+You can experiment with different weight to see how it impacts the search.
+
+## Deployment
+
+We can deploy this application using AWS and docker. First lets get a local production build working and then we can deploy it to AWS.
+
+The docker build process for this app assumes that the UI has already been built for production, this helps with deployment on smaller machines as the UI build process is quite resource intensive. To build the UI for production run the following command from the ./e-commerce-demo/frontend directory.
+
+```
+REACT_APP_ENV=production npm run build
+```
+
+The `REACT_APP_ENV` environment variable is used to set the environment for the UI, this is used to determine which API endpoint to use. The `npm run build` command will build the UI for production and place the output in the ./e-commerce-demo/frontend/build directory.
+
+Once this is done we can build the docker image. Navigate up one directory with `cd ..` and run:
+
+```
+docker build -t e-commerce-demo .
+```
+
+You can then run the docker container locally with:
+```
+export MARQO_API_URL="<your index url>"
+export MARQO_API_KEY="<your api key>"
+export MARQO_INDEX="<your index name>"
+
+docker run -p 80:80 --env MARQO_API_URL="$MARQO_API_URL" --env MARQO_API_KEY="$MARQO_API_KEY" --env MARQO_INDEX="$MARQO_INDEX" e-commerce-demo
+```
+
+The application should now be running on `http://localhost/`.
+
+## Deploying on Elastic Beanstalk
+
+Initialise the Elastic Beanstalk project:
+```
+eb init
+```
+
+Set environment variables:
+```
+eb setenv MARQO_API_URL="<your index url>"
+eb setenv MARQO_API_KEY="<your api key>"
+eb setenv MARQO_INDEX="<your index name>"
+```
+
+Create the application and deploy all resources to AWS:
+```
+eb create -s
+```
+
+If you navigate to Elastic Beanstalk in your AWS console you should see your application being created. Once it is ready you will be able to use the URL provided by AWS to access your application.
+
+
+When you are done you can instantly terminate all resources (except for the S3 bucket which you will need to remove manually) with:
+```
+eb terminate --force
+```
 
 
 # Chatbot Application Quickstart
