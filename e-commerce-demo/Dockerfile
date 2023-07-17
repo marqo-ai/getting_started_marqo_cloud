@@ -43,4 +43,5 @@ CMD sed -i "s|MARQO_API_URL|$MARQO_API_URL|g" /app/backend/app.py && \
     sed -i "s|MARQO_API_KEY|$MARQO_API_KEY|g" /app/backend/app.py && \
     sed -i "s|MARQO_INDEX|$MARQO_INDEX|g" /app/backend/app.py && \
     service nginx start && \
-    gunicorn -b 127.0.0.1:5000 backend.app:app --workers 2
+    cd backend/ && \
+    gunicorn -b 127.0.0.1:5000 --log-level=debug app:app --workers 2
