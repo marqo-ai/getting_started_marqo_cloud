@@ -1,0 +1,19 @@
+Using Marqo within Docker (recommended)
+Currently, only CUDA based (Nvidia) GPU's are supported. If you have a GPU on the host machine and want to use it with Marqo, there are two things to do;
+
+Install nvidia-docker2.
+Add a --gpus all flag to the Docker run command. Note that this flag should appear after the run command but before the end. See the full Docker command in step 2 below.
+Detailed instructions
+Install nvidia-docker2 which is required for the GPU to work with Docker. The three steps below will install it for a Ubuntu based machine (refer to the original instructions for more details);
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+      && curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+      && curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list | \
+            sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+            sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+
+sudo apt-get update
+sudo apt-get install -y nvidia-docker2
+Once nvidia-docker2 is installed, a simple modification to the Docker command is all that is needed. This is achieved by adding a --gpus all flag to the docker run command. For example, the Docker command would become,
+
+docker run --name marqo --gpus all --privileged -p 8882:8882 --add-host host.docker.internal:host-gateway marqoai/marqo:latest
+note the --gpus all has been added.

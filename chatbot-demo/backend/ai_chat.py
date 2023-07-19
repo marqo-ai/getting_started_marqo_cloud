@@ -11,10 +11,12 @@ load_dotenv()
 
 GPT_MODEL = "gpt-3.5-turbo-0613"
 
+FUNCTION_DESCRIPTION = "This is a search engine, use it when the user instructs you to search in any way. Also use it for organisational knowledge, personal information, or anything about Marqo."
+
 FUNCTIONS = [
     {
         "name": "search",
-        "description": "This is a search engine, use it when the user instructs you to search in any way. Also use it for organisational knowledge or personal information.",
+        "description": FUNCTION_DESCRIPTION,
         "parameters": {
             "type": "object",
             "properties": {
@@ -29,19 +31,33 @@ FUNCTIONS = [
 ]
 
 def format_chat(conversation: List[str], user_input: str) -> List[Dict[str, str]]:
-    llm_conversation = [
+    primer_message = [
         SystemMessage(
-            content="All code should specify the language so that markdown can be rendered."
+            content="All code fences should specify the language so that markdown can be rendered properly."
         )
     ]
+    llm_conversation = []
+    approx_tokens = []
     for i in range(len(conversation)):
         if i % 2:
             msg = AIMessage(content=remove_responses(conversation[i]))
         else:
             msg = HumanMessage(content=conversation[i])
+
+        approx_tokens.append(len(msg.content)//4)
         llm_conversation.append(msg)
 
+    # not particularly efficient or sophisticated, but it does the job
+    # in reality what you probably want to do here is keep a running summary of the conversation
+    # to cut down on tokens
+    while sum(approx_tokens) > 3600:
+        llm_conversation.pop(0)
+        approx_tokens.pop(0)
+
     llm_conversation.append(HumanMessage(content=user_input))
+
+    llm_conversation = primer_message + llm_conversation
+
     open_ai_conversation = [vars(m) for m in llm_conversation]
     return open_ai_conversation
 

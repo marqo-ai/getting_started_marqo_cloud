@@ -12,7 +12,6 @@ function App() {
         <div className="marqo-logo-container">
           <img className="marqo-logo" src={marqoLogo} alt="Marqo logo" />
         </div>
-        <h3>Chat</h3>
         <ChatWindow />
         {/* <h3>Add Knowledge</h3>
         <KnowledgeAdder />

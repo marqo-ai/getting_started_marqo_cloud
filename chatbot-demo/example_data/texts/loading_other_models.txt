@@ -1,0 +1,26 @@
+Marqo comes with configurations for a plethora of open source models out of the box. For more info go to our documentation on [dense retrieval models](https://docs.marqo.ai/latest/Models-Reference/dense_retrieval/).
+
+Example of creating an index with a text embedding model:
+```Python
+# Import Marqo and create a client
+settings = {
+    "index_defaults": {
+        "treat_urls_and_pointers_as_images": False,
+        "model": "hf/e5-large",
+        "normalize_embeddings": True,
+    },
+}
+response = mq.create_index("my-index", settings_dict=settings)
+```
+
+Example of creating an index with a multimodal CLIP model:
+```Python
+settings = {
+    "index_defaults": {
+        "treat_urls_and_pointers_as_images": True,
+        "model": "open_clip/ViT-H-14/laion2b_s32b_b79k",
+        "normalize_embeddings": True,
+    },
+}
+response = mq.create_index("my-index", settings_dict=settings)
+```

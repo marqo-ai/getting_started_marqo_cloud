@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { trackPromise } from 'react-promise-tracker';
 import ReactMarkdown from 'react-markdown';
 import BouncingDots from '../messages/BouncingDots';
-import ErrorPopup from '../ErrorPopup';
+import ErrorPopup from '../errorPopup/ErrorPopup';
 // import CodeBlock from './CodeBlock';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
@@ -22,7 +22,7 @@ const ChatWindow = () => {
   const [userInput, setUserInput] = useState<string>('');
   const [systemResponse, setSystemResponse] = useState<string>('');
   const [backendError, setBackendError] = useState<boolean>(false);
-  const [conversationSummary, setConversationSummary] = useState<string>('');
+  const [backendErrorMsg, setBackendErrorMsg] = useState<Error>(new Error(''));
   const chatWindowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -58,11 +58,11 @@ const ChatWindow = () => {
         body: JSON.stringify({
           conversation: conversation,
           q: userInput,
+          limit: 3,
         }),
       });
 
       if (!response.ok) {
-        handleErrorOccured();
         throw new Error('Request failed');
       }
       if (response.body == null) return;
@@ -82,12 +82,14 @@ const ChatWindow = () => {
       }
     };
 
-    trackPromise(streamRequest(conversation, userInput)).catch((error: any) => {
+    trackPromise(streamRequest(conversation, userInput)).catch((error: Error) => {
       console.error('Error:', error);
+      handleErrorOccured(error);
     });
   };
 
-  const handleErrorOccured = () => {
+  const handleErrorOccured = (error: any) => {
+    setBackendErrorMsg(error);
     setBackendError(true);
   };
 
@@ -162,7 +164,12 @@ const ChatWindow = () => {
           Send
         </button>
       </div>
-      <ErrorPopup error={backendError} onIgnore={handleErrorIgnore} onReset={handleErrorReset} />
+      <ErrorPopup
+        error={backendError}
+        errorMsg={backendErrorMsg}
+        onIgnore={handleErrorIgnore}
+        onReset={handleErrorReset}
+      />
     </div>
   );
 };

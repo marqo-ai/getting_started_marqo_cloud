@@ -1,0 +1,20 @@
+How to make indexes in Marqo with custom models, this is useful for deploying finetuned or custom models. For more info look at [bring your own CLIP models](https://docs.marqo.ai/latest/Models-Reference/bring_your_own_model/#bring-your-own-clip-model)
+
+Example of a custom open CLIP model:
+```Python
+# create an index with your custom model
+settings = {
+    "index_defaults": {
+        "treat_urls_and_pointers_as_images": True,
+        "model": 'generic-clip-test-model-1',
+        "model_properties": {
+            "name": "ViT-B-32-quickgelu",
+                "dimensions": 512,
+                "url": "https://github.com/mlfoundations/open_clip/releases/download/v0.2-weights/vit_b_32-quickgelu-laion400m_avg-8a00ab3c.pt",
+                "type": "open_clip",
+            },
+        "normalize_embeddings": True,
+    },
+}
+response = mq.create_index("my-own-clip", settings_dict=settings)
+```

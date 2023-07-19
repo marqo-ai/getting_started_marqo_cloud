@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
-.chat-window {
+/* .chat-window {
   display: flex;
   flex-direction: column;
   height: 700px;
@@ -10,6 +10,22 @@
   overflow-y: scroll;
   position: relative;
   border-radius: 5px;
+  overflow: auto;
+  min-height: 100%;
+  background-color: #242526;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+} */
+
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  height: 700px;
+  max-width: 1200px;
+  width: 90vw;
+  border-radius: 10px;
+  overflow-y: scroll;
+  position: relative;
   overflow: auto;
   min-height: 100%;
   background-color: #242526;

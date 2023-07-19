@@ -1,0 +1,75 @@
+.error-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.error-popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 80%;
+}
+
+.error-popup-content h2 {
+  color: #f44336;
+  margin-bottom: 15px;
+}
+
+.error-popup-content p {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.error-popup-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.error-popup-buttons button {
+  padding: 10px 20px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.error-popup-buttons button:first-child {
+  background: #f44336;
+  color: #fff;
+}
+
+.error-popup-buttons button:last-child {
+  background: #4caf50;
+  color: #fff;
+}
+
+.error-details {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.error-msg {
+  color: #dc3545;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.error-stack {
+  color: #6c757d;
+  white-space: pre-wrap;
+  font-size: 0.9em;
+}

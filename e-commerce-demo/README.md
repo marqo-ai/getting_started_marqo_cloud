@@ -45,7 +45,7 @@ docker build -t e-commerce-demo .
 ```
 
 ```
-docker run -p 80:80 --env MARQO_API_URL="$MARQO_API_URL" --env MARQO_API_KEY="$MARQO_API_KEY" --env MARQO_INDEX="$MARQO_INDEX" e-commerce-demo
+docker run -p 80:80 --env MARQO_API_URL=$MARQO_API_URL --env MARQO_API_KEY=$MARQO_API_KEY --env MARQO_INDEX=$MARQO_INDEX e-commerce-demo
 ```
 
 ## Deploying on Elastic Beanstalk
@@ -54,16 +54,16 @@ Initialise the Elastic Beanstalk project:
 eb init
 ```
 
-Set environment variables:
-```
-eb setenv MARQO_API_URL="http://localhost:8882"
-eb setenv MARQO_API_KEY=""
-eb setenv MARQO_INDEX="e-commerce-demo-index"
-```
-
 Create the application and deploy all resources to AWS:
 ```
 eb create -s
+```
+
+Wait for the app to deploy, once the environment is created successfully we need to push an update to the app with the correct environment variables to make it work.
+
+Set environment variables:
+```
+eb setenv MARQO_API_URL=$MARQO_API_URL MARQO_API_KEY=$MARQO_API_KEY MARQO_INDEX=$MARQO_INDEX
 ```
 
 ### Cleanup application

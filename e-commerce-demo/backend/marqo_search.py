@@ -39,6 +39,7 @@ def search(
     composed_query = compose_query(query, more_of, less_of)
 
     result = MQ.index(index).search(composed_query, limit=limit)
+    
     return [
         SearchResult(
             id=r["_id"],

@@ -1,7 +1,7 @@
 import marqo
 import os
 import json
-from typing import List, Dict, Any
+from typing import List
 
 MARQO_INDEX = os.getenv("MARQO_INDEX")
 MARQO_API_URL = os.getenv("MARQO_API_URL")
@@ -9,7 +9,7 @@ MARQO_API_KEY = os.getenv("MARQO_API_KEY")
 
 CLIENT = marqo.Client(url=MARQO_API_URL, api_key=MARQO_API_KEY)
 
-def search(query: str, limit: int = 5) -> List[str]:
+def search(query: str, limit: int = 3) -> List[str]:
     
     results = CLIENT.index(MARQO_INDEX).search(query, limit=limit)
     hits = results["hits"]
