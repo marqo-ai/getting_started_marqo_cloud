@@ -20,8 +20,8 @@
 .chat-window {
   display: flex;
   flex-direction: column;
-  height: 700px;
-  max-width: 1200px;
+  height: 80vh;
+  max-width: 1400px;
   width: 90vw;
   border-radius: 10px;
   overflow-y: scroll;
@@ -52,7 +52,7 @@
   margin: 5px;
   padding: 10px;
   border-radius: 15px;
-  font-size: 14px;
+  font-size: 16px;
   white-space: pre-line;
   max-width: 97%;
   /* overflow: scroll; */
@@ -68,6 +68,11 @@
   list-style-position: inside;
   padding-left: 16px;
   margin: 5px 0;
+}
+
+.message pre div {
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .user-message {

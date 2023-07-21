@@ -1,34 +1,37 @@
-from pydantic import BaseModel
+from dataclasses import dataclass
 
 
-class HumanMessage(BaseModel):
-    role: str = "user"
-    content: str
-
-    def __getitem__(self, item):
-        return getattr(self, item)
-
-    def __dict__(self):
-        return vars(self)
-
-
-class AIMessage(BaseModel):
-    role: str = "assistant"
-    content: str
+class HumanMessage:
+    def __init__(self, content):
+        self.role = "user"
+        self.content = content
 
     def __getitem__(self, item):
         return getattr(self, item)
 
-    def __dict__(self):
-        return vars(self)
+    def to_dict(self):
+        return {"role": self.role, "content": self.content}
 
 
-class SystemMessage(BaseModel):
-    role: str = "system"
-    content: str
+class AIMessage:
+    def __init__(self, content):
+        self.role = "assistant"
+        self.content = content
 
     def __getitem__(self, item):
         return getattr(self, item)
 
-    def __dict__(self):
-        return vars(self)
+    def to_dict(self):
+        return {"role": self.role, "content": self.content}
+
+
+class SystemMessage:
+    def __init__(self, content):
+        self.content = content
+        self.role = "system"
+
+    def __getitem__(self, item):
+        return getattr(self, item)
+
+    def to_dict(self):
+        return {"role": self.role, "content": self.content}

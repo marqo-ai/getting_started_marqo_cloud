@@ -1,0 +1,6 @@
+ANN Algorithm Parameter object
+The ann_parameters object contains hyperparameters for the approximate nearest neighbour algorithm used for tensor storage within Marqo. The parameters are as follows:
+
+Name	Type	Default value	Description
+space_type	String	cosinesimil	The function used to measure the distance between two points in ANN (l1, l2, linf, or cosinesimil).
+parameters	Dict	""	The hyperparameters for the ANN method (which is always hnsw for Marqo).

@@ -1,5 +1,9 @@
 Get statistics abouts an index in Marqo with get_stats.
 ```python
-results = mq.index("my-first-index").get_stats()
-print(results)
+>>> results = mq.index("my-first-index").get_stats()
+>>> print(results)
+
+{
+  "numberOfDocuments": 2
+}
 ```

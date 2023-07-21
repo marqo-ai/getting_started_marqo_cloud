@@ -1,0 +1,25 @@
+Example of an index defaults object for creating an index in Marqo.
+{
+    "index_defaults": {
+        "treat_urls_and_pointers_as_images": false,
+        "model": "hf/all_datasets_v4_MiniLM-L6",
+        "normalize_embeddings": true,
+        "text_preprocessing": {
+            "split_length": 2,
+            "split_overlap": 0,
+            "split_method": "sentence"
+        },
+        "image_preprocessing": {
+            "patch_method": null
+        },
+        "ann_parameters" : {
+            "space_type": "cosinesimil",
+            "parameters": {
+                "ef_construction": 128,
+                "m": 16
+            }
+        }
+    },
+    "number_of_shards": 1,
+    "number_of_replicas": 0
+}

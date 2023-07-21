@@ -70,7 +70,8 @@ git clone https://github.com/marqo-ai/getting_started_marqo_cloud.git
 
 In this tutorial we will build an image search application using Marqo! We will start with an existing code base and then walk through how to customise the behaviour.
 
-<!-- The total cost of running this application will be $DOLLARS per hour and the anticipated time to complete the tutorial is TIME, for a total of $TIMExDOLLARS cost. -->
+The total cost of running this application on will depend on your configuration. You can run it on `marqo.basic` storage and inference however it will be slow to index the data. This configuraiton will cost approximately $0.1186 per hour and the anticipated time to complete the tutorial is TIME, for a total of $TIMEx0.1186 cost. If you want to index the data faster you can use a `marqo.CPU` or `marqo.GPU` for a total of $0.3780 and $1.0310 respectively. You don't need to index all the data to benefit from this tutorial however your search results will get better and more interesting as you index more data. Indexing images is significantly faster on a GPU.
+
 
 ## Building your first image search application with Marqo
 
@@ -158,9 +159,9 @@ def compose_query(query: str, more_of: str, less_of: str) -> Dict[str, float]:
         query: 1.0,
     }
     if more_of:
-        composed_query[more_of] = 0.5
+        composed_query[more_of] = 0.75
     if less_of:
-        composed_query[less_of] = -0.75
+        composed_query[less_of] = -1.1
 
     return composed_query
 ```
@@ -262,13 +263,15 @@ In this guide we will build a chat bot application using your Marqo Cloud and Op
 
 To begin you will need to create an API key for OpenAI, [get started here](https://openai.com/blog/openai-api). Once you have an API key, save it for use later in this tutorial.
 
-<!-- The total cost of running this application on will be $DOLLARS per hour and the anticipated time to complete the tutorial is TIME, for a total of $TIMExDOLLARS cost. The application also depends upon the gpt-3.5-turbo-0613 model from OpenAI, please refer to [their pricing](https://openai.com/pricing). -->
+You can run this demo on `marqo.basic` storage and inference as the amount of data is very small. This configuraiton will cost approximately $0.1186 per hour and the anticipated time to complete the tutorial is TIME, for a total of $TIMEx0.1186 cost.
+
+The application also depends upon the `gpt-4-0613` model or the `gpt-3.5-turbo-0613` model from OpenAI, please refer to [their pricing](https://openai.com/pricing). `gpt-4-0613` is the default as it is significantly better at using the functions API. If you do not have access to GPT4's API or want to use a cheaper model then just swap to `gpt-3.5-turbo-0613` in `./backend/ai_chat.py`.
 
 ## Building your first chat bot with Marqo
 
 In this tutorial we will build a chatbot that is able to access and use domain specific knowledge from organisational documentation, personal documents, or anything else you ask it to search for. We will use the OpenAI ChatGPT API to generate responses to user queries and Marqo to search for relevant documents to use as context for the chatbot.
 
-This makes use of the function calling capabilites of the latest `gpt-3.5-turbo-0613` model.
+This makes use of the function calling capabilites of the new `0613` models.
 
 For this tutorial you will need Python, Node.JS, and git to be installed. A basic understanding on Python is assumed, an intermediate understand will be useful for customisation of application behaviour at the end.
 
@@ -276,11 +279,21 @@ For this tutorial you will need Python, Node.JS, and git to be installed. A basi
 
 ### Experiment
 
+<!-- You can start by conversing normally with the chatbot, it should behave exactly like ChatGPT does. If you ask it to search for something however it will call out to Marqo to find relevant documents to use as context for the chatbot. This demo preloads your index with excerpts from the Marqo documentation so you can ask it questions about Marqo like "Search for how to add documents with the Marqo Python client".
+
+If you are using GPT4 then it will be a lot better at using the functions API, you should be able to just say "How do I add documents in Marqo?" and GPT4 will be able to work out that it needs to search by calling the function to get the answer from Marqo. -->
+
 ### Customise
+
+You can customise the behaviour by playing with the system prompts and the function description in the `ai_chat.py` file.
+
+Another good excercise is to add more data to your index, perhaps some documents you have or some online information. You can then ask the chatbot questions about this new information. The schema of your documents doesn't matter in this demo as ChatGPT is given the entire document as context. That being said, you will get errors about GPT's context length if your documents are very long so it is best to keep them short and break larger documents into smaller ones (e.g. by chunking on paragraph).
 
 # Further reading
 
 ## Documentation
+
+For more information on Marqo and how to use it with Python and cURL please refer to the [documentation](https://docs.marqo.ai/latest).
 
 ## Examples
 

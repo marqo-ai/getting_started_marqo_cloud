@@ -1,0 +1,7 @@
+Text Preprocessing Object
+The text_preprocessing object contains the specifics of how you want the index to preprocess text. The parameters are as follows:
+
+Name	Type	Default value	Description
+split_length	Integer	2	The length of the chunks after splitting by split_method
+split_overlap	Integer	0	The length of overlap between adjacent chunks
+split_method	String	sentence	The method by which text is chunked (character, word, sentence, or passage)

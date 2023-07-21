@@ -9,13 +9,13 @@ MARQO_API_KEY = os.getenv("MARQO_API_KEY")
 
 CLIENT = marqo.Client(url=MARQO_API_URL, api_key=MARQO_API_KEY)
 
+
 def search(query: str, limit: int = 3) -> List[str]:
-    
     results = CLIENT.index(MARQO_INDEX).search(query, limit=limit)
     hits = results["hits"]
 
     for i in range(len(hits)):
         del hits[i]["_highlights"]
         del hits[i]["_id"]
-    
+
     return json.dumps(hits)

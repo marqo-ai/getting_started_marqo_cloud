@@ -36,7 +36,9 @@ python app.py
 ## Docker Build
 Build the UI:
 ```
+cd frontend
 REACT_APP_ENV=production npm run build
+cd ..
 ```
 
 Build the image:

@@ -26,7 +26,7 @@ def search_marqo():
         app.logger.debug(f"Found {len(results)} results")
     except Exception as e:
         app.logger.debug(str(e))
-    
+
     response = {"results": [dict(r) for r in results]}
     return response, 200
 
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     app.run()
 
 
-if __name__ != '__main__':
-    gunicorn_logger = logging.getLogger('gunicorn.error')
+if __name__ != "__main__":
+    gunicorn_logger = logging.getLogger("gunicorn.error")
     app.logger.handlers = gunicorn_logger.handlers
     app.logger.setLevel(gunicorn_logger.level)

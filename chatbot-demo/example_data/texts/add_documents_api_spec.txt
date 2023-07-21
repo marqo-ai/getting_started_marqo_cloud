@@ -1,0 +1,10 @@
+Marqo add documents API specification and parameters. 
+
+Query Parameter	Type	Default Value	Description
+refresh	Boolean	true	Forces a refresh after adding documents. This makes the documents available for searching. If you are happy to wait for the system to refresh, you can set this to false for better performance.
+device	String	null	The device used to index the documents. If device is not specified and CUDA devices are available to Marqo (see here for more info), Marqo will speed up the indexing process by using available CUDA devices. Otherwise, the CPU will be used. Options include cpu and cuda, cuda1, cuda2 etc. The cuda option tells Marqo to use any available cuda devices.
+non_tensor_fields	Array of Strings	[]	The fields within these documents to not create tensors for. Tensor search cannot be performed on these fields in these documents; pre-filtering and lexical search are still viable.
+use_existing_tensors	Boolean	false	Setting this to true will get existing tensors for unchanged fields in documents that are indexed with an id. Note: Marqo analyses the field string for updates, so Marqo can't detect a change if a URL points to a different image.
+image_download_headers	Dict	{}	A JSON-serialised, URL encoded dictionary of headers for image download. Can be used to authenticate the images for download.
+mappings	Dict	null	A JSON-serialised, URL encoded dictionary to handle object fields in documents. Check mappings for more information. Mappings are required to create multimodal tensor combination fields - see here for more information
+model_auth	Dict	null	A JSON-serialised, URL encoded dictionary that consists of authorisation details used by Marqo to download non-publicly available models. Check here for more information.

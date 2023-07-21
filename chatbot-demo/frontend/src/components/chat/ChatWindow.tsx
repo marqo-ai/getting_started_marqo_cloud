@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { trackPromise } from 'react-promise-tracker';
-import ReactMarkdown from 'react-markdown';
 import BouncingDots from '../messages/BouncingDots';
 import ErrorPopup from '../errorPopup/ErrorPopup';
-// import CodeBlock from './CodeBlock';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import MarkdownMessage from '../messages/MarkdownMessage';
 import { API_BASE_URL } from '../../constants';
 
@@ -54,6 +50,7 @@ const ChatWindow = () => {
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
         },
         body: JSON.stringify({
           conversation: conversation,

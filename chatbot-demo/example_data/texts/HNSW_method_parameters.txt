@@ -1,0 +1,6 @@
+HNSW Method Parameters Object
+parameters can have the following values:
+
+Name	Type	Default value	Description
+ef_construction	int	128	The size of the dynamic list used during k-NN graph creation. Higher values lead to a more accurate graph but slower indexing speed. It is recommended to keep this between 2 and 800 (maximum is 4096)
+m	int	16	The number of bidirectional links that the plugin creates for each new element. Increasing and decreasing this value can have a large impact on memory consumption. Keep this value between 2 and 100.

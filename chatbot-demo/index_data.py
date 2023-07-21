@@ -10,14 +10,18 @@ MARQO_API_URL = os.getenv("MARQO_API_URL")
 MARQO_API_KEY = os.getenv("MARQO_API_KEY")
 MARQO_INDEX = os.getenv("MARQO_INDEX")
 
+# Increase these for larger datasets, client batch size of 64 is recommended
+PROGRESS_CHUNK = 4
+CLIENT_BATCH_SIZE = 4
+
 def index_data(documents: List[Dict[str, Any]]) -> None:
     client = marqo.Client(url=MARQO_API_URL, api_key=MARQO_API_KEY)
-    chunk_size = 256
+    chunk_size = PROGRESS_CHUNK
     for i in tqdm(range(0, len(documents), chunk_size)):
         batch = documents[i : i + chunk_size]
         responses = client.index(MARQO_INDEX).add_documents(
             batch,
-            client_batch_size=64
+            client_batch_size=CLIENT_BATCH_SIZE
         )
         for response in responses:
             if response["errors"]:

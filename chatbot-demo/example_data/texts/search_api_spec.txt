@@ -1,0 +1,17 @@
+Marqo search API parameters.
+
+Search Parameter	Type	Default value	Description
+q	String OR Dict	""	Query string, or weighted query strings (if Dict)
+limit	Integer	20	Maximum number of document chunks to be returned
+offset	Integer	0	Number of documents to skip (used for pagination)
+filter	String	null	Filter string in the Marqo DSL Language
+searchableAttributes	Array of strings	["*"]	Attributes to display in the returned documents
+showHighlights	Boolean	true	Return highlights for the document match
+searchMethod	String	"TENSOR"	The search method, can be LEXICAL or TENSOR
+attributesToRetrieve	Array of strings	["*"]	Attributes to return in the search response
+reRanker	String	null	Method to use for reranking results
+boost	Dict	null	Dictionary of attribute (string): 2-Array [weight (float), bias (float)]
+image_download_headers	Dict	{}	Headers for the image download. Can be used to authenticate the images for download.
+context	Dict	null	Dictionary of "tensor":{List[{"vector": List[floats], "weight": (float)}]} to bring your own vectors into search.
+scoreModifiers	Dict	null	A dictionary to modify the score based on field values. Check here for examples.
+modelAuth	Dict	null	Authorisation details used by Marqo to download non-publicly available models. Check here for examples.

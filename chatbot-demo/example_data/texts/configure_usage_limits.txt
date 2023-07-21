@@ -1,0 +1,18 @@
+Configuring usage limits
+Limits can be set to protect the resources of the machine Marqo is running on.
+
+Configuration name	Default	Description
+MARQO_MAX_INDEX_FIELDS	n/a	Maximum number of fields allowed per index
+MARQO_MAX_DOC_BYTES	100000	Maximum document size allowed to be indexed
+MARQO_MAX_RETRIEVABLE_DOCS	n/a	Maximum number of documents allowed to be returned in a single request
+MARQO_MAX_NUMBER_OF_REPLICAS	1	Maximum number of replicas allowed when creating an index
+MARQO_MAX_CUDA_MODEL_MEMORY	4	Maximum CUDA memory usage (GB) for models in Marqo. For multi-GPU, this is the max memory for each GPU.
+MARQO_MAX_CPU_MODEL_MEMORY	4	Maximum RAM usage (GB) for models in Marqo.
+MARQO_MAX_VECTORISE_BATCH_SIZE	16	Maximum size of batch size to process in parallel (when, for example, adding documents ).
+Example
+docker run --name marqo --privileged -p 8882:8882 --add-host host.docker.internal:host-gateway \
+    -e "MARQO_MAX_INDEX_FIELDS=400" \
+    -e "MARQO_MAX_DOC_BYTES=200000" \
+    -e "MARQO_MAX_RETRIEVABLE_DOCS=600" \
+    -e "MARQO_MAX_CUDA_MODEL_MEMORY=5" \
+    -e "MARQO_MAX_NUMBER_OF_REPLICAS=2" marqoai/marqo:latest

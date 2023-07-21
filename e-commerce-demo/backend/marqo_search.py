@@ -24,9 +24,9 @@ def compose_query(query: str, more_of: str, less_of: str) -> Dict[str, float]:
         query: 1.0,
     }
     if more_of:
-        composed_query[more_of] = 0.5
+        composed_query[more_of] = 0.75
     if less_of:
-        composed_query[less_of] = -0.75
+        composed_query[less_of] = -1.1
 
     return composed_query
 
@@ -39,7 +39,7 @@ def search(
     composed_query = compose_query(query, more_of, less_of)
 
     result = MQ.index(index).search(composed_query, limit=limit)
-    
+
     return [
         SearchResult(
             id=r["_id"],

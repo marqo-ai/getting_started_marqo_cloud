@@ -44,7 +44,9 @@ python app.py
 ### Docker Build
 Build the UI:
 ```
+cd frontend
 REACT_APP_ENV=production npm run build
+cd ..
 ```
 
 Build the image:
@@ -71,7 +73,7 @@ Wait for the app to deploy, once the environment is created successfully we need
 
 Set environment variables:
 ```
-eb setenv MARQO_API_URL=$MARQO_API_URL MARQO_API_KEY=$MARQO_API_KEY MARQO_INDEX=$MARQO_INDEX
+eb setenv MARQO_API_URL=$MARQO_API_URL MARQO_API_KEY=$MARQO_API_KEY MARQO_INDEX=$MARQO_INDEX OPENAI_API_KEY=$OPENAI_API_KEY
 ```
 
 ### Cleanup application

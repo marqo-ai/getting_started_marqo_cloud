@@ -1,0 +1,5 @@
+List all indexes in Marqo using Python
+
+```Python
+mq.get_indexes()
+```

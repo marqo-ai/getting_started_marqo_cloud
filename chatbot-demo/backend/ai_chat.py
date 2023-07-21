@@ -9,9 +9,16 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-GPT_MODEL = "gpt-3.5-turbo-0613"
+# GPT4 works much better than 3.5 for this however it is a lot more expensive
 
-FUNCTION_DESCRIPTION = "This is a search engine, use it when the user instructs you to search in any way. Also use it for organisational knowledge, personal information, or anything about Marqo."
+# GPT_MODEL = "gpt-3.5-turbo-0613"
+GPT_MODEL = "gpt-4-0613"
+
+FUNCTION_DESCRIPTION = "Search the Marqo index whenever Marqo is mentioned or you are told to search. This function returns information about how to use Marqo amongst other things."
+
+SYSTEM_PROMPT = """
+All code fences should specify the language so that markdown can be rendered properly.
+"""
 
 FUNCTIONS = [
     {
@@ -30,12 +37,9 @@ FUNCTIONS = [
     },
 ]
 
+
 def format_chat(conversation: List[str], user_input: str) -> List[Dict[str, str]]:
-    primer_message = [
-        SystemMessage(
-            content="All code fences should specify the language so that markdown can be rendered properly."
-        )
-    ]
+    primer_message = [SystemMessage(content="")]
     llm_conversation = []
     approx_tokens = []
     for i in range(len(conversation)):
@@ -43,14 +47,16 @@ def format_chat(conversation: List[str], user_input: str) -> List[Dict[str, str]
             msg = AIMessage(content=remove_responses(conversation[i]))
         else:
             msg = HumanMessage(content=conversation[i])
-
-        approx_tokens.append(len(msg.content)//4)
+        print("MESSAGE", msg)
+        print("DOES IT HAVE CONTENT?", hasattr(msg, "content"))
+        print("MESSAGE TYPE", type(msg))
+        approx_tokens.append(len(msg.content) // 4)
         llm_conversation.append(msg)
 
     # not particularly efficient or sophisticated, but it does the job
     # in reality what you probably want to do here is keep a running summary of the conversation
     # to cut down on tokens
-    while sum(approx_tokens) > 3600:
+    while sum(approx_tokens) > 3000:
         llm_conversation.pop(0)
         approx_tokens.pop(0)
 
@@ -58,7 +64,8 @@ def format_chat(conversation: List[str], user_input: str) -> List[Dict[str, str]
 
     llm_conversation = primer_message + llm_conversation
 
-    open_ai_conversation = [vars(m) for m in llm_conversation]
+    open_ai_conversation = [m.to_dict() for m in llm_conversation]
+    print(open_ai_conversation)
     return open_ai_conversation
 
 
@@ -69,9 +76,7 @@ def append_function_deltas(
     return function_call
 
 
-def converse(
-    user_input: str, conversation: List[str], limit: int
-) -> Generator:
+def converse(user_input: str, conversation: List[str], limit: int) -> Generator:
     conversation = format_chat(conversation, user_input)
     stream1 = openai.ChatCompletion.create(
         model=GPT_MODEL,
@@ -117,9 +122,7 @@ def converse(
         function_name = message["function_call"]["name"]
 
         arguments = json.loads(message["function_call"]["arguments"])
-        function_response = search(
-            query=arguments.get("query"), limit=limit
-        )
+        function_response = search(query=arguments.get("query"), limit=limit)
         yield "\n```curl\nResponse:\n".encode("utf-8")
         yield f"{json.dumps(function_response, indent=4)}\n```\n".encode("utf-8")
 
