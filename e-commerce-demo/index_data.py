@@ -15,8 +15,8 @@ URL = os.getenv("MARQO_API_URL", None)
 API_KEY = os.getenv("MARQO_API_KEY", None)
 CLIENT = marqo.Client(url=URL, api_key=API_KEY)
 INDEX_NAME = os.getenv("MARQO_INDEX", None)
-REQUEST_CHUNK_SIZE = 16
-CLIENT_BATCH_SIZE = 16
+REQUEST_CHUNK_SIZE = 64
+CLIENT_BATCH_SIZE = 32
 
 
 def print_banner(message: str) -> None:
@@ -44,40 +44,6 @@ def print_banner(message: str) -> None:
     )
     print()
 
-def create_index() -> None:
-    """
-    This function has a lot of extra checks to make it pretty hard to shoot yourself in the foot
-    """
-    settings = {
-        "index_defaults": {
-            "treat_urls_and_pointers_as_images": True,
-            "model": "ViT-L/14",
-            "normalize_embeddings": True,
-        },
-    }
-    try:
-        CLIENT.create_index(INDEX_NAME, settings_dict=settings)
-        print("Finished creating index...")
-    except Exception as e:
-        print(colorama.Fore.RED + "Exception occured:" + colorama.Style.RESET_ALL)
-        print(e)
-        choice = None
-        while choice not in {"y", "n"}:
-            choice = input(
-                "Would you like to reset the index if it exists? (y/n): "
-            ).strip()
-        if choice == "y":
-            try:
-                CLIENT.delete_index(INDEX_NAME)
-                CLIENT.create_index(INDEX_NAME, settings_dict=settings)
-                print("Finished creating index...")
-            except Exception as e:
-                print(
-                    colorama.Fore.RED + "Exception occured:" + colorama.Style.RESET_ALL
-                )
-                print(e)
-
-
 def get_data() -> Dict[str, str]:
     """
     Fetch the dataset from S3
@@ -86,7 +52,7 @@ def get_data() -> Dict[str, str]:
     data = pd.read_csv(filename)
     print(data.columns)
     data["image_url"] = data["s3_http"]
-    documents = data[["image_url", "title", "price"]].to_dict(orient="records")
+    documents = data[["image_url", "title", "price", "aesthetic_score"]].to_dict(orient="records")
     for i in range(len(documents)):
         documents[i]["_id"] = documents[i]["image_url"].split("/")[-1]
         documents[i]["name"] = documents[i]["title"]
@@ -106,7 +72,7 @@ def index_data(documents: Dict[str, str]) -> None:
         chunk = documents[i : i + REQUEST_CHUNK_SIZE]
 
         CLIENT.index(INDEX_NAME).add_documents(
-            chunk, client_batch_size=CLIENT_BATCH_SIZE, non_tensor_fields=["name", "price"]
+            chunk, client_batch_size=CLIENT_BATCH_SIZE, tensor_fields=["image_url"]
         )
 
     print(
@@ -125,8 +91,6 @@ def setup_application() -> None:
 
     print("Fetching data from AWS S3...")
     documents = get_data()
-
-    create_index()
 
     index_data(documents)
 

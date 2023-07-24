@@ -1,2 +1,5 @@
 venv
+index_data.py
+README.md
+__pycache__
 node_modules

@@ -50,10 +50,10 @@ export MARQO_INDEX="chatbot-demo-index"
 ```
 
 ```
-python -m venv venv 
+python3 -m venv venv 
 source venv/bin/activate
-pip install -r requirements.txt
-python index_data.py
+pip3 install -r requirements.txt
+python3 index_data.py
 ```
 
 Open up a two new terminals to continue on.
@@ -77,10 +77,10 @@ export OPENAI_API_KEY="<your OPENAI API key>"
 ```
 Run the backend:
 ```
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
-python app.py
+pip3 install -r requirements.txt
+python3 app.py
 ```
 
 #### Frontend

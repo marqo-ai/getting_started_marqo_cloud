@@ -41,12 +41,19 @@ The first step here is to index the data for the demo, the script is ready to go
 ```
 export MARQO_API_URL="<your index url>"
 export MARQO_API_KEY="<your api key>"
-export MARQO_INDEX="e-commerce-search-demo"
+export MARQO_INDEX="e-commerce-demo-index"
+```
+
+Make a virtual environment:
+```
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
 ```
 
 You can then index the data by running the following script.
 ```
-python index_data.py
+python3 index_data.py
 ```
 This script will index the data and log the document ids that have been indexed as it goes. A progress bar will show where it is up to. Indexing all 250,000 products will take a while so don't wait for it to finish to continue with the tutorial, just let it work away in the background. 
 
@@ -63,16 +70,16 @@ In one of your terminals navigate to the ./e-commerce-demo/backend directory and
 ```
 export MARQO_API_URL="<your index url>"
 export MARQO_API_KEY="<your api key>"
-export MARQO_INDEX="e-commerce-search-demo"
+export MARQO_INDEX="e-commerce-demo-index"
 
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 We can now run the webserver for the backend.
 ```
-python app.py
+python3 app.py
 ```
 
 #### Frontend
@@ -151,9 +158,8 @@ def search(
         composed_query, 
         limit=limit,
         score_modifiers = {
-            "add_to_score": 
-                [{"field_name": "aesthetic_score", "weight" : 0.2}] 
-            }
+            "add_to_score": [{"field_name": "aesthetic_score", "weight" : 0.2}] 
+        }
     )
     
     ...
@@ -183,7 +189,7 @@ You can then run the docker container locally with:
 ```
 export MARQO_API_URL="<your index url>"
 export MARQO_API_KEY="<your api key>"
-export MARQO_INDEX="e-commerce-search-demo"
+export MARQO_INDEX="e-commerce-demo-index"
 
 docker run -p 80:80 --env MARQO_API_URL="$MARQO_API_URL" --env MARQO_API_KEY="$MARQO_API_KEY" --env MARQO_INDEX="$MARQO_INDEX" e-commerce-demo
 ```
