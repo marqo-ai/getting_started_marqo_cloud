@@ -4,7 +4,7 @@
 ### Indexing the data
 Set environment variables:
 ```
-export MARQO_API_URL="http://localhost:8882"
+export MARQO_API_URL="<your endpoint url>"
 export MARQO_API_KEY=""
 export MARQO_INDEX="chatbot-demo-index"
 ```
@@ -27,7 +27,7 @@ Backend:
 
 Set environment variables:
 ```
-export MARQO_API_URL="http://localhost:8882"
+export MARQO_API_URL="<your endpoint url>"
 export MARQO_API_KEY=""
 export MARQO_INDEX="chatbot-demo-index"
 export OPENAI_API_KEY="<insert your API key>"
