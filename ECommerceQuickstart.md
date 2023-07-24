@@ -101,6 +101,8 @@ Here are some searches to try out, you can use the three search fields in differ
 | tshirt | amazon | |
 | rolex | gold | |
 | handbag | | office job |
+| I have a gala coming up | | |
+| Some shoes that I can skateboard in | converse | |
 
 ### Customise (optional)
 
