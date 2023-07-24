@@ -13,7 +13,7 @@ The application also depends upon the `gpt-4-0613` model or the `gpt-3.5-turbo-0
 
 In this tutorial we will build a chatbot that is able to access and use domain specific knowledge from organisational documentation, personal documents, or anything else you ask it to search for. We will use the OpenAI ChatGPT API to generate responses to user queries and Marqo to search for relevant documents to use as context for the chatbot.
 
-This makes use of the function calling capabilites of the new `0613` models.
+This makes use of the function calling capabilities of the new `0613` models.
 
 For this tutorial you will need Python, Node.JS, and git to be installed. A basic understanding on Python is assumed, an intermediate understand will be useful for customisation of application behaviour at the end.
 
@@ -107,7 +107,7 @@ If you are using GPT4 then it will do a lot better with the function calls and h
 
 You can customise the behaviour by playing with the system prompts and the function description in the `ai_chat.py` file.
 
-Another good excercise is to add more data to your index, perhaps some documents you have or some online information. You can then ask the chatbot questions about this new information. The schema of your documents doesn't matter in this demo as ChatGPT is given the entire document as context. That being said, you will get errors about GPT's context length if your documents are very long so it is best to keep them short and break larger documents into smaller ones (e.g. by chunking on paragraph).
+Another good exercise is to add more data to your index, perhaps some documents you have or some online information. You can then ask the chatbot questions about this new information. The schema of your documents doesn't matter in this demo as ChatGPT is given the entire document as context. That being said, you will get errors about GPT's context length if your documents are very long so it is best to keep them short and break larger documents into smaller ones (e.g. by chunking on paragraph).
 
 
 ## Deployment

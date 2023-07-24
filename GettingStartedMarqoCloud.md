@@ -9,13 +9,13 @@
 </p>
 
 
-# Geting Started with Marqo Cloud
+# Getting Started with Marqo Cloud
 
 Welcome to the Marqo Cloud getting started guide. In this page we will go through how to get set up and running with Marqo Cloud starting from your first time login through to building your first application with Marqo.
 
 # Navigating the Console
 
-In this section we will get aquainted with the console.
+In this section we will get acquainted with the console.
 
 If you haven't made an account yet then you can [sign up here](https://cloud.marqo.ai/).
 
@@ -51,7 +51,7 @@ This is self explanatory. This will be the name of your index. You will use this
 
 ### Indexing mode
 
-The indexing mode is effictively a shorthand for your index configuration. Choosing `Test-based` (the default) will automatically choose a model that is suitable for indexing text-only data. Likewise, choosing `Multi-modal` will choose a model that is suitable for indexing text and images. You can view these index settings in detail unde the `Hide advanced details` accordian above the estimated cost.
+The indexing mode is effectively a shorthand for your index configuration. Choosing `Test-based` (the default) will automatically choose a model that is suitable for indexing text-only data. Likewise, choosing `Multi-modal` will choose a model that is suitable for indexing text and images. You can view these index settings in detail under the `Hide advanced details` accordion above the estimated cost.
 
 ### Storage shard type
 
@@ -85,7 +85,7 @@ A common usage pattern is to mix these nodes for different stages of development
 
 This will configure how many instances of the storage and inference classes will be created. Each shard is an instance of your storage type and will multiply the cost of the storage type by each shard. Each replica will contain all your shards and thus multiplies the cost of all your shards. Replicas increase availability and also reduce latency as the search traffic can be balanced across your replicas. For production applications at least one replicas is recommended.
 
-The number of inference pods will multiply the cost of your inference pod type by the number of pods. This will increase the speed of indexing and searching as the load can be balanced across your pods. You can scale down to zero to remove your inference costs however you index cannot be accessed programatically while there are no inference pods. A higher number of inference pods will help in applications with high request concurrency. For many applications one or two pods will be sufficient.
+The number of inference pods will multiply the cost of your inference pod type by the number of pods. This will increase the speed of indexing and searching as the load can be balanced across your pods. You can scale down to zero to remove your inference costs however you index cannot be accessed programmatically while there are no inference pods. A higher number of inference pods will help in applications with high request concurrency. For many applications one or two pods will be sufficient.
 
 ### Advanced details
 
@@ -107,7 +107,7 @@ Once you have made an index and its creation has completed (usually about 10 min
 
 ### Testing your endpoint
 
-If you have created an index you can check that it is up and running via the `/indexes` endpoint. You will need to have created and index and given the inference pods time to finish initialising as described in the previous steps. You can check your indexees via Python or via cURL as follows.
+If you have created an index you can check that it is up and running via the `/indexes` endpoint. You will need to have created and index and given the inference pods time to finish initializing as described in the previous steps. You can check your indexes via Python or via cURL as follows.
 
 Python:
 ```python
@@ -148,7 +148,7 @@ New members will be sent an email inviting them to your account, this will provi
 
 ## Billing
 
-You can view your billing information by heading to the billing tab in the left nav bar. You can view your current and forcasted usage for the month as well as a breakdown of your usage. To update billing information or to view invoice details and historical billing data you can click the View Billing Portal button at the bottom right and your billing portal will open in a new tab.
+You can view your billing information by heading to the billing tab in the left nav bar. You can view your current and forecasted usage for the month as well as a breakdown of your usage. To update billing information or to view invoice details and historical billing data you can click the View Billing Portal button at the bottom right and your billing portal will open in a new tab.
 
 
 # Marqo Demo Applications

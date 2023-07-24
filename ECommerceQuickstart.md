@@ -11,7 +11,19 @@ In this tutorial we will create an E-commerce image search platform using a data
 <!-- For this tutorial you will need Python and git to be installed. A basic understanding on Python is assumed. -->
 <!-- For this tutorial you will need Python, Node.JS, and git to be installed. A basic understanding on Python is assumed. -->
 
-The application has a frontend and a backend. The frontend is written in NextJS and it sends fetch requests to the backend which is written as a webserver using Python and Flask. The backend webserver uses the Marqo Python client to connect to your marqo cloud account.
+The application has a frontend and a backend. The frontend is written in NextJS and it sends fetch requests to the backend which is written as a webserver using Python and Flask. The backend webserver uses the Marqo Python client to connect to your Marqo cloud account.
+
+## Creating your index
+
+Head to your [Marqo Cloud console](https://cloud.marqo.ai) and create a new index. Use the following settings:
+
+- Index name: `e-commerce-demo-index`
+- Indexing mode: `Multimodal`
+- Storage shard type: `marqo.basic`
+- Inference pod type: `marqo.basic`
+- Number of shards: `1`
+- Number of replicas: `0`
+- Number of inference pods: `1`
 
 ### Setup
 
@@ -80,8 +92,15 @@ npm run start
 
 You will be able to search straight away however the experience will get better with time as your index becomes more and more diverse. You will notice though that you always get search results back, this is one of the great things about vector search, it will always return something.
 
-Here are some searches to try out:
-<!-- SEARCHES TO TRY OUT GO HERE -->
+Here are some searches to try out, you can use the three search fields in different combinations to test the results:
+
+| Query | More of | Less of |
+| --- | --- | --- |
+| shirt | buttons | sleeves|
+| shoes | formal | black |
+| tshirt | amazon | |
+| rolex | gold | |
+| handbag | | office job |
 
 ### Customise (optional)
 
@@ -110,13 +129,13 @@ You can experiment with these weights to see how they impact your searches. For 
 
 You could also add prompting into the query, for example you could force "higher quality" images in your results by adding `composed_query["high quality, high resolution"] = 0.2` to the query.
 
-Or perhaps you want to supress some of the stranger AI generated images in the dataset, you could add `composed_query["weird, deformed, AI generated"] = -0.3` to the query.
+Or perhaps you want to suppress some of the stranger AI generated images in the dataset, you could add `composed_query["weird, deformed, AI generated"] = -0.3` to the query.
 
-These prompting stratergies are a powerful way to customise your search experience.
+These prompting strategies are a powerful way to customise your search experience.
 
 #### Adding score modifiers
 
-Marqo support score modifiers, these allow you to change to ranking of the results using attributes of the documents. For example, you could boost the score for results where the seller is reputible or where the product is popular.
+Marqo support score modifiers, these allow you to change to ranking of the results using attributes of the documents. For example, you could boost the score for results where the seller is reputable or where the product is popular.
 
 For the demo we can boost works using their aesthetic score. In the `search` function we can add score modifiers as follows:
 
