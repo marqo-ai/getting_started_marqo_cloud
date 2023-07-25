@@ -67,7 +67,7 @@ def index_data(documents: Dict[str, str]) -> None:
     """
     Index the data into Marqo
     """
-    print(f"Indexing data with requests of {REQUEST_CHUNK_SIZE} documents...")
+    print(f"Indexing data, updating progress every {REQUEST_CHUNK_SIZE} documents.")
     for i in tqdm(range(0, len(documents), REQUEST_CHUNK_SIZE), desc="Indexing data"):
         chunk = documents[i : i + REQUEST_CHUNK_SIZE]
 
