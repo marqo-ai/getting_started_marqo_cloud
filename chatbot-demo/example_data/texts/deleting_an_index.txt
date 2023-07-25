@@ -1,0 +1,3 @@
+Example of deleting an index with Marqo.
+
+results = mq.index("my-first-index").delete()
