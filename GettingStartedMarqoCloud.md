@@ -163,7 +163,7 @@ The commands in these tutorials are for Linux and MacOS. If you are using Window
 
 | Demo | Description |
 | --- | --- |
-| 🛍️ [E-Commerce](./ECommerceQuickStart.md) | Build an E-Commerce image search application using Marqo! This demo uses an AI generated E-Commerce dataset with additional metadata to experiment with score modifiers. |
+| 🛍️ [E-Commerce](./ECommerceQuickstart.md) | Build an E-Commerce image search application using Marqo! This demo uses an AI generated E-Commerce dataset with additional metadata to experiment with score modifiers. |
 | 🤖 [Chatbot](./ChatBotQuickstart.md) | Build a chatbot that can search your data to generate informed responses using GPT4, get started with an index built from Marqo's documentation. |
 
 # Further reading
@@ -172,6 +172,17 @@ The commands in these tutorials are for Linux and MacOS. If you are using Window
 
 For more information on Marqo and how to use it with Python and cURL please refer to the [documentation](https://docs.marqo.ai/latest).
 
-## Examples
+## More Examples
+
+| Name | Description |
+| --- | --- |
+| 🖼️ [Local Image Search](https://github.com/marqo-ai/local-image-search-demo) | A demo that uses the opensource docker container for image search, all written in Python. Can be adapted to the cloud with minimal changes. |
+| 🦙 [Marqo + LLaMa](https://github.com/OwenPendrighElliott/LocalMarqoQA) | This demo shows how to run Marqo with LLaMa, similar to the Chatbot demo in this getting started guide. |
+| 🔊 [Searching Transcripts](https://github.com/OwenPendrighElliott/SpeechSearch) | This project shows how you can pipe audio from online sources into Marqo for conversational Q&A. |
+| 🦛 [Examples](https://github.com/marqo-ai/marqo/tree/mainline/examples) | Our main repo has a selection of examples for applications that use Marqo. |
 
 ## Support
+
+Feel free to reach out [on our community forum](https://community.marqo.ai/).
+
+Marqo Cloud users can reach out for dedicated support via the cloud console.

@@ -45,7 +45,7 @@ This demo comes packaged with a script to index some excerpts from the Marqo doc
 Set environment variables:
 ```
 export MARQO_API_URL="<your endpoint url>"
-export MARQO_API_KEY=""
+export MARQO_API_KEY="<your api key>"
 export MARQO_INDEX="chatbot-demo-index"
 ```
 
@@ -71,7 +71,7 @@ In one of your terminals navigate to the `./chatbot-demo/backend` directory to s
 Set environment variables:
 ```
 export MARQO_API_URL="<your endpoint url>"
-export MARQO_API_KEY=""
+export MARQO_API_KEY="<your api key>"
 export MARQO_INDEX="chatbot-demo-index"
 export OPENAI_API_KEY="<your OPENAI API key>"
 ```
