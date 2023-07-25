@@ -1,0 +1,18 @@
+Context parameter for marqo search function.
+
+Parameter: context
+
+Expected value: Dictionary of "tensor":{List[{"vector": List[floats], "weight": (float)}]}
+
+Default value: null
+
+Context allows you to use your own vectors as context for your queries. Your vectors will be incorporated into the query using a weighted sum approach, allowing you to reduce the number of inference requests for duplicated content. The dimension of the provided vectors should be consistent with the index dimension.
+
+Example
+my_index.search(
+    {"Chocolate chip cookies" :1},
+    # the dimension of the vector (which is 768 here) should match the dimension of the index
+    context = {"tensor": [{"vector": [0.3,] * 768, "weight" : 2}, # custom vector 1
+                          {"vector": [0.12,] * 768, "weight" : -1},] # custom vector 2
+    }
+)
