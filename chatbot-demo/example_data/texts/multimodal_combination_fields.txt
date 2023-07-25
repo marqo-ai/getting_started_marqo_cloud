@@ -8,7 +8,7 @@ The example below demonstrates this with retrieval of caption and image pairs us
 import marqo
 import pprint
 
-mq = marqo.Client(url="http://localhost:8882")
+mq = marqo.Client(url="http://localhost:8882", api_key="")
 
 settings = {"treat_urls_and_pointers_as_images": True, "model": "ViT-L/14"}
 

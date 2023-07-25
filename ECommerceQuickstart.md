@@ -65,7 +65,7 @@ Open up a two new terminals to continue on.
 
 Next we want to start the backend webserver. This webserver acts as an intermediate between Marqo and the UI. It will take the search query from the UI and send it to Marqo, it will then take the results from Marqo and send them back to the UI. This lets us keep our API key secret and also lets us do some pre and post processing of the data. This pattern is typical of many application and can be implemented in any language that can make HTTP requests. In this demo we use Python and Flask however you could use almost any language you like or implement this via serverless functions in the cloud.
 
-In one of your terminals navigate to the ./e-commerce-demo/backend directory and create a virtual environment for the backend.
+In one of your terminals navigate to the `./e-commerce-demo/backend` directory and create a virtual environment for the backend.
 
 ```
 export MARQO_API_URL="<your index url>"
@@ -84,7 +84,7 @@ python3 app.py
 
 #### Frontend
 
-In your other terminal we will start the frontend. For this demo the frontend is written using ReactJS and TypeScript. This app makes requests to the Flask server when searches are made, the results hydrate the UI. Navigate to the ./e-commerce-demo/frontend directory and install the dependencies and start the frontend.
+In your other terminal we will start the frontend. For this demo the frontend is written using ReactJS and TypeScript. This app makes requests to the Flask server when searches are made, the results hydrate the UI. Navigate to the `./e-commerce-demo/frontend` directory and install the dependencies and start the frontend.
 
 ```
 npm i
@@ -177,7 +177,7 @@ The docker build process for this app assumes that the UI has already been built
 REACT_APP_ENV=production npm run build
 ```
 
-The `REACT_APP_ENV` environment variable is used to set the environment for the UI, this is used to determine which API endpoint to use. The `npm run build` command will build the UI for production and place the output in the ./e-commerce-demo/frontend/build directory.
+The `REACT_APP_ENV` environment variable is used to set the environment for the UI, this is used to determine which API endpoint to use. The `npm run build` command will build the UI for production and place the output in the `./e-commerce-demo/frontend/build` directory.
 
 Once this is done we can build the docker image. Navigate up one directory with `cd ..` and run:
 

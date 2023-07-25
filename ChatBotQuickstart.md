@@ -5,7 +5,7 @@ In this guide we will build a chat bot application using your Marqo Cloud and Op
 To begin you will need to create an API key for OpenAI, [get started here](https://openai.com/blog/openai-api). Once you have an API key, save it for use later in this tutorial.
 
 You can run this demo on `marqo.basic` storage and inference as the amount of data is very small. This configuraiton will cost approximately \$0.1186 per hour and the anticipated time to complete the tutorial is |TIME|, for a total of \$|TIME|
-x0.1186 cost.
+x0.1186 cost, plus any costs from OpenAI.
 
 The application also depends upon the `gpt-4-0613` model or the `gpt-3.5-turbo-0613` model from OpenAI, please refer to [their pricing](https://openai.com/pricing). `gpt-4-0613` is the default as it is significantly better at using the functions API. If you do not have access to GPT4's API or want to use a cheaper model then just swap to `gpt-3.5-turbo-0613` in `./backend/ai_chat.py`.
 
@@ -66,7 +66,7 @@ Next we want to start the backend webserver. This webserver takes the conversati
 
 The webserver lets us keep our API key secret and also lets us do some pre and post processing of the data. This pattern is typical of many application and can be implemented in any language that can make HTTP requests. In this demo we use Python and Flask however you could use almost any language you like or implement this via serverless functions in the cloud.
 
-In one of your terminals navigate to the ./chatbot-demo/backend directory to set the environment variables and create a virtual environment for the backend.
+In one of your terminals navigate to the `./chatbot-demo/backend` directory to set the environment variables and create a virtual environment for the backend.
 
 Set environment variables:
 ```
@@ -85,7 +85,7 @@ python3 app.py
 
 #### Frontend
 
-In your other terminal we will start the frontend. For this demo the frontend is written using ReactJS and TypeScript. This app makes requests to the Flask server when searches are made, the results hydrate the UI. Navigate to the ./chatbot-demo/frontend directory and install the dependencies and start the frontend.
+In your other terminal we will start the frontend. For this demo the frontend is written using ReactJS and TypeScript. This app makes requests to the Flask server when searches are made, the results hydrate the UI. Navigate to the `./chatbot-demo/frontend` directory and install the dependencies and start the frontend.
 
 ```
 npm i
@@ -102,6 +102,7 @@ You can start by conversing normally with the chatbot, it should behave exactly 
 
 If you are using GPT4 then it will do a lot better with the function calls and hallucinate a lot less in the responses.
 
+Have a look in `./example_data/texts/` to see what sort of data was indexed and thus what things you can expect to be able to ask the chatbot about.
 
 ### Customise
 

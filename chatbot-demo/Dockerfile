@@ -27,12 +27,13 @@ EXPOSE 80
 ARG MARQO_API_URL
 ARG MARQO_API_KEY
 ARG MARQO_INDEX
-ARG OPEN_AI_API_KEY
+ARG OPENAI_API_KEY
 
 # Start Nginx and the Flask app with environment variables
 CMD sed -i "s|MARQO_API_URL|$MARQO_API_URL|g" /app/backend/app.py && \
     sed -i "s|MARQO_API_KEY|$MARQO_API_KEY|g" /app/backend/app.py && \
     sed -i "s|MARQO_INDEX|$MARQO_INDEX|g" /app/backend/app.py && \
-    sed -i "s|OPEN_AI_API_KEY|$OPEN_AI_API_KEY|g" /app/backend/app.py && \
+    sed -i "s|OPENAI_API_KEY|$OPENAI_API_KEY|g" /app/backend/app.py && \
     service nginx start && \
-    gunicorn -b 127.0.0.1:5000 backend.app:app --workers 2
+    cd backend/ && \
+    gunicorn -b 127.0.0.1:5000 app:app --workers 2

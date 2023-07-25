@@ -17,7 +17,7 @@ GPT_MODEL = "gpt-4-0613"
 FUNCTION_DESCRIPTION = "Search the Marqo index whenever Marqo is mentioned or you are told to search. This function returns information about how to use Marqo amongst other things."
 
 SYSTEM_PROMPT = """
-All code fences should specify the language so that markdown can be rendered properly.
+IMPORTANT: All code blocks should specify the language so that markdown can be rendered properly, e.g. ```python\n```.
 """
 
 FUNCTIONS = [
@@ -108,6 +108,9 @@ def converse(user_input: str, conversation: List[str], limit: int) -> Generator:
         yield "\n```\n".encode("utf-8")
 
     stream1.close()
+
+    if function_call is None:
+        return
 
     message = {
         "role": "assistant",

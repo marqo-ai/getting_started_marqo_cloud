@@ -3,7 +3,7 @@ Example of adding documents with Marqo Python client:
 ```Python
 import marqo
 
-mq = marqo.Client(url='http://localhost:8882')
+mq = marqo.Client(url='http://localhost:8882', api_key="")
 
 mq.create_index("my-first-index")
 

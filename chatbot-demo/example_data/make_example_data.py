@@ -11,6 +11,7 @@ data_list = []
 # Iterate over each file in the folder
 for filename in os.listdir(folder_path):
     if filename.endswith(".txt"):
+        print("Adding file:", filename)
         file_path = os.path.join(folder_path, filename)
         with open(file_path, "r") as file:
             # Read the contents of the file

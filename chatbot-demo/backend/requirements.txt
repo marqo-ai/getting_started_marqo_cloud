@@ -4,3 +4,5 @@ openai
 marqo
 Requests
 black
+python-dotenv
+gunicorn

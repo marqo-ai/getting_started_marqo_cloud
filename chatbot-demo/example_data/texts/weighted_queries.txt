@@ -8,7 +8,7 @@ The example below shows the application of this to a scenario where a user may w
 import marqo
 import pprint
 
-mq = marqo.Client(url="http://localhost:8882")
+mq = marqo.Client(url="http://localhost:8882", api_key="")
 mq.create_index("my-weighted-query-index")
 
 mq.index("my-weighted-query-index").add_documents(

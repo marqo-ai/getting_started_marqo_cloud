@@ -36,19 +36,19 @@ def print_banner(message: str) -> None:
     print(colorama.Fore.BLUE + empty_line + colorama.Style.RESET_ALL)
     print(colorama.Fore.BLUE + horizontal_line + colorama.Style.RESET_ALL)
     print(
-        "\nThe application will now undergo some first time setup, please wait while your local "
+        "\nThe application will now undergo some first time setup, data will be added to your "
         + colorama.Fore.GREEN
         + "Marqo"
         + colorama.Style.RESET_ALL
-        + " index is constructed."
+        + " index."
     )
-    print()
+    print("\nThis dataset is comprised of AI generated E-Commerce products and images.\n")
 
 def get_data() -> Dict[str, str]:
     """
     Fetch the dataset from S3
     """
-    filename = "https://marqo-overall-demo-assets.s3.us-west-2.amazonaws.com/ecommerce_meta_data.csv"
+    filename = "https://marqo-overall-demo-assets.s3.us-west-2.amazonaws.com/ecommerce_meta_data_clean.csv"
     data = pd.read_csv(filename)
     print(data.columns)
     data["image_url"] = data["s3_http"]
