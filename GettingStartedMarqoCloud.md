@@ -31,17 +31,17 @@ Note: you will not incur any costs on your Marqo account unless you create an in
 
 You can navigate to your indexes but clicking on the indexes tab on the left nav bar.
 
-![Index tab on nav bar](./assets/sidebar_indexes.png)
+![Index tab on nav bar](./assets/sidebar_indexes.PNG)
 
 This will bring you to the indexes page, here you can view and managed your indexes once they have been created.
 
 To create a new index, click the create index button.
 
-![Create index button](./assets/indexes_pre_creation_button_highlight.png)
+![Create index button](./assets/indexes_pre_creation_button_highlight.PNG)
 
 You can now configure the index as needed for your application. We will talk through what each of these sections mean in the following sections. The screen will look like this.
 
-![Create index page](./assets/create_index.png)
+![Create index page](./assets/create_index.PNG)
 
 ### Index name
 
