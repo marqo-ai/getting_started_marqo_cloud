@@ -18,6 +18,7 @@ FUNCTION_DESCRIPTION = "Search the Marqo index whenever Marqo is mentioned or yo
 
 SYSTEM_PROMPT = """
 IMPORTANT: All code blocks should specify the language so that markdown can be rendered properly, e.g. ```python\n```.
+Never make stuff up about the Marqo API, use the search functionality for it, stick to the facts.
 """
 
 FUNCTIONS = [
@@ -39,7 +40,7 @@ FUNCTIONS = [
 
 
 def format_chat(conversation: List[str], user_input: str) -> List[Dict[str, str]]:
-    primer_message = [SystemMessage(content="")]
+    primer_message = [SystemMessage(content=SYSTEM_PROMPT)]
     llm_conversation = []
     approx_tokens = []
     for i in range(len(conversation)):
@@ -47,9 +48,6 @@ def format_chat(conversation: List[str], user_input: str) -> List[Dict[str, str]
             msg = AIMessage(content=remove_responses(conversation[i]))
         else:
             msg = HumanMessage(content=conversation[i])
-        print("MESSAGE", msg)
-        print("DOES IT HAVE CONTENT?", hasattr(msg, "content"))
-        print("MESSAGE TYPE", type(msg))
         approx_tokens.append(len(msg.content) // 4)
         llm_conversation.append(msg)
 
@@ -65,7 +63,6 @@ def format_chat(conversation: List[str], user_input: str) -> List[Dict[str, str]
     llm_conversation = primer_message + llm_conversation
 
     open_ai_conversation = [m.to_dict() for m in llm_conversation]
-    print(open_ai_conversation)
     return open_ai_conversation
 
 

@@ -60,6 +60,7 @@ def get_documents():
     return documents
 
 if __name__ == "__main__":
+    print_banner("Marqo Documentation Example Index")
     documents = get_documents()
     index_data(documents)
     

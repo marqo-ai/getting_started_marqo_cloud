@@ -9,3 +9,24 @@ results = mq.index("my-first-index").search(
     q="What is the best outfit to wear on the moon?"
 )
 ```
+
+Results will look something like:
+```
+{
+    'hits': [
+        {   
+            'Title': 'Extravehicular Mobility Unit (EMU)',
+            '_id': 'article_591',
+            '_score': 1.2387788
+        }, 
+        {   
+            'Title': 'The Travels of Marco Polo',
+            '_id': 'e00d1a8d-894c-41a1-8e3b-d8b2a8fce12a',
+            '_score': 1.2047464
+        }
+    ],
+    'limit': 10,
+    'processingTimeMs': 49,
+    'query': 'What is the best outfit to wear on the moon?'
+}
+```
