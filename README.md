@@ -161,8 +161,8 @@ The commands in these tutorials are for Linux and MacOS. If you are using Window
 
 | Demo | Description |
 | --- | --- |
-| 🛍️ [E-Commerce](./ECommerceQuickstart.md) | Build an E-Commerce image search application using Marqo! This demo uses an AI generated E-Commerce dataset with additional metadata to experiment with score modifiers. |
-| 🤖 [Chatbot](./ChatBotQuickstart.md) | Build a chatbot that can search your data to generate informed responses using GPT4, get started with an index built from Marqo's documentation. |
+| 🛍️ [E-Commerce](./e-commerce-demo/README.md) | Build an E-Commerce image search application using Marqo! This demo uses an AI generated E-Commerce dataset with additional metadata to experiment with score modifiers. |
+| 🤖 [Chatbot](./chatbot-demo/README.md) | Build a chatbot that can search your data to generate informed responses using GPT4, get started with an index built from Marqo's documentation. |
 
 # Further reading
 
