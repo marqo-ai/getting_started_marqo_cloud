@@ -4,8 +4,7 @@ In this guide we will build a chat bot application using your Marqo Cloud and Op
 
 To begin you will need to create an API key for OpenAI, [get started here](https://openai.com/blog/openai-api). Once you have an API key, save it for use later in this tutorial.
 
-You can run this demo on `marqo.basic` storage and inference as the amount of data is very small. This configuraiton will cost approximately \$0.1186 per hour and the anticipated time to complete the tutorial is |TIME|, for a total of \$|TIME|
-x0.1186 cost, plus any costs from OpenAI.
+This demo will use `marqo.basic` storage and `marqo.CPU` inference, the amount of data is very small. The suggested configuration will cost approximately \$0.3780 per hour and the anticipated time to complete the tutorial is 1 to 2 hours. You will also be charged by OpenAI for usage of their ChatGPT API though the cost is minimal.
 
 The application also depends upon the `gpt-4-0613` model or the `gpt-3.5-turbo-0613` model from OpenAI, please refer to [their pricing](https://openai.com/pricing). `gpt-4-0613` is the default as it is significantly better at using the functions API. If you do not have access to GPT4's API or want to use a cheaper model then just swap to `gpt-3.5-turbo-0613` in `./backend/ai_chat.py`.
 
@@ -15,7 +14,19 @@ In this tutorial we will build a chatbot that is able to access and use domain s
 
 This makes use of the function calling capabilities of the new `0613` models.
 
-For this tutorial you will need Python, Node.JS, and git to be installed. A basic understanding on Python is assumed, an intermediate understand will be useful for customisation of application behaviour at the end.
+For this tutorial you will need Python, Node.JS, Docker, and Git to be installed. A basic understanding on Python is assumed, an intermediate understand will be useful for customisation of application behaviour at the end.
+
+Please ensure that Python, Node, Docker, and Git work before preceeding. If you are on windows you will need to use the Windows Subsystem for Linux to follow along.
+
+Clone the repo with `git clone https://github.com/marqo-ai/getting_started_marqo_cloud.git`.
+
+## Project Overview
+
+This project is a web application with frontend and backend using Python, Flask, ReactJS, and Typescript. The frontend is a ReactJS application that makes requests to the backend which is a Flask application. The backend makes requests to your Marqo cloud and OpenAI's ChatGPT API.
+
+For deployment the flask app is served with a WSGI server and the frontend accesses its routes via a reverse proxy setup with NGINX.
+
+This monolithic architecture is simple yet effective and the concepts in this guide can be extended to other languages, frameworks, and non-monolithic applications.
 
 ## Creating your index
 
@@ -24,7 +35,7 @@ Head to your [Marqo Cloud console](https://cloud.marqo.ai) and create a new inde
 - Index name: `chatbot-demo-index`
 - Indexing mode: `Text-based`
 - Storage shard type: `marqo.basic`
-- Inference pod type: `marqo.basic`
+- Inference pod type: `marqo.CPU`
 - Number of shards: `1`
 - Number of replicas: `0`
 - Number of inference pods: `1`

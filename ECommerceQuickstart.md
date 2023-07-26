@@ -2,16 +2,26 @@
 
 In this tutorial we will build an image search application using Marqo! We will start with an existing code base and then walk through how to customise the behaviour.
 
-The total cost of running this application on will depend on your configuration. You can run it on `marqo.basic` storage and inference however it will be slow to index the data. This configuration will cost approximately \$0.1186 per hour and the anticipated time to complete the tutorial is |TIME|, for a total of \$|TIME|x0.1186 cost. If you want to index the data faster you can use a `marqo.CPU` or `marqo.GPU` for a total of \$0.3780 and \$1.0310 respectively. You don't need to index all the data to benefit from this tutorial however your search results will get better and more interesting as you index more data. Indexing images is significantly faster on a GPU.
+The total cost of running this application on will depend on your configuration. This demo will use `marqo.basic` storage and `marqo.CPU` inference, you are welcome to use `marqo.GPU` inference however it will cost more. The suggested configuration will cost approximately \$0.3780 per hour and the anticipated time to complete the tutorial is 1 to 2 hours. If you want to index the data faster you can use a `marqo.GPU` \$1.0310 per hour. You don't need to index all the data to benefit from this tutorial however your search results will get better and more interesting as you index more data. Indexing images is significantly faster on a GPU.
 
 
 ## Building your first image search application with Marqo
 
 In this tutorial we will create an E-commerce image search platform using a dataset of AI generated E-commerce data. Our dataset has product titles, descriptions, costs, aesthetic scores and images. In total there are around 250,000 images.
-<!-- For this tutorial you will need Python and git to be installed. A basic understanding on Python is assumed. -->
-<!-- For this tutorial you will need Python, Node.JS, and git to be installed. A basic understanding on Python is assumed. -->
 
-The application has a frontend and a backend. The frontend is written in NextJS and it sends fetch requests to the backend which is written as a webserver using Python and Flask. The backend webserver uses the Marqo Python client to connect to your Marqo cloud account.
+For this tutorial you will need Python, Node.JS, Docker, and Git to be installed. A basic understanding on Python is assumed, an intermediate understand will be useful for customisation of application behaviour at the end.
+
+Please ensure that Python, Node, Docker, and Git work before preceeding. If you are on windows you will need to use the Windows Subsystem for Linux to follow along.
+
+Clone the repo with `git clone https://github.com/marqo-ai/getting_started_marqo_cloud.git`.
+
+## Project Overview
+
+This project is a web application with frontend and backend using Python, Flask, ReactJS, and Typescript. The frontend is a ReactJS application that makes requests to the backend which is a Flask application. The backend makes requests to your Marqo cloud API.
+
+For deployment the flask app is served with a WSGI server and the frontend accesses its routes via a reverse proxy setup with NGINX.
+
+This monolithic architecture is simple yet effective and the concepts in this guide can be extended to other languages, frameworks, and non-monolithic applications.
 
 ## Creating your index
 
@@ -20,7 +30,7 @@ Head to your [Marqo Cloud console](https://cloud.marqo.ai) and create a new inde
 - Index name: `e-commerce-demo-index`
 - Indexing mode: `Multimodal`
 - Storage shard type: `marqo.basic`
-- Inference pod type: `marqo.basic`
+- Inference pod type: `marqo.CPU`
 - Number of shards: `1`
 - Number of replicas: `0`
 - Number of inference pods: `1`
