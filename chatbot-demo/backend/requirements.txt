@@ -1,8 +1,7 @@
-Flask
-Flask_Cors
-openai
-marqo
-Requests
-black
-python-dotenv
+Flask==2.3.2
+Flask_Cors==4.0.0
+marqo==1.1.0
+openai==0.27.8
+python-dotenv==1.0.0
 gunicorn
+black

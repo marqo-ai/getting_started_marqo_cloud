@@ -15,6 +15,7 @@ MARQO_INDEX = os.getenv("MARQO_INDEX")
 PROGRESS_CHUNK = 4
 CLIENT_BATCH_SIZE = 4
 
+
 def print_banner(message: str) -> None:
     horizontal_line = "#" * (len(message) + 4)
     empty_line = "#" + " " * (len(message) + 2) + "#"
@@ -40,6 +41,7 @@ def print_banner(message: str) -> None:
     )
     print("\nThis dataset is comprised excerpts from the Marqo documentation.\n")
 
+
 def index_data(documents: List[Dict[str, Any]]) -> None:
     client = marqo.Client(url=MARQO_API_URL, api_key=MARQO_API_KEY)
     chunk_size = PROGRESS_CHUNK
@@ -53,15 +55,15 @@ def index_data(documents: List[Dict[str, Any]]) -> None:
         for response in responses:
             if response["errors"]:
                 print(json.dumps(response["errors"], indent=2))
-        
+
+
 def get_documents():
     with open(os.path.join("example_data", "example_data.json"), "r") as f:
         documents = json.load(f)
     return documents
 
+
 if __name__ == "__main__":
     print_banner("Marqo Documentation Example Index")
     documents = get_documents()
     index_data(documents)
-    
-
