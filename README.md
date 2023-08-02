@@ -70,7 +70,7 @@ The shard type, number of shards, and number of replicas you pick in index creat
 
 ### Inference pod type
 
-The inference pod type adjusts the infrastructure that is used for inference. Inference is the process of creating vectors from your data. A more powerful inference node will reduce latency for indexing and search by creating vectors faster. Inference pod type has a particularly big difference on latency for indexing or searching with images. There are three inference pod types available:
+The inference pod type adjusts the infrastructure that is used for inference. Inference is the process of creating vectors from your data. A more powerful inference node will reduce latency for indexing and search by creating vectors faster. Inference pod type has a particularly big difference on latency for indexing or searching with images. There are two inference pod types available:
 
 + `marqo.CPU`
     + Marqo CPU is the middle tier of the inference pod types. This is suitable for production applications with low latency search. For many application a `marqo.CPU` pod will be sufficient when searching with text however if searching or indexing image and dealing with very high request concurrency these may become too slow.
@@ -123,7 +123,7 @@ curl "https://api.marqo.ai/indexes" -H 'X-API-KEY: <your api key>'
 
 You should see output along the lines of
 
-```
+```json
 {"results": [{"index_name": "my-first-index"}]}
 ```
 

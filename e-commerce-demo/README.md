@@ -211,13 +211,17 @@ The application should now be running on `http://localhost/`.
 ## Deploying on Elastic Beanstalk
 Initialise the Elastic Beanstalk project:
 ```
+pip install awsebcli
 eb init
 ```
+
+Choose your region of choice and name the application. For platform select the first option (Docker running on 64bit Amazon Linux 2). For SSH you can say no.
 
 Create the application and deploy all resources to AWS:
 ```
 eb create -s
 ```
+You can use all default options for this step.
 
 Wait for the app to deploy, once the environment is created successfully we need to push an update to the app with the correct environment variables to make it work.
 
