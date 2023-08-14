@@ -58,11 +58,11 @@ The indexing mode is effectively a shorthand for your index configuration. Choos
 The storage shard type is the type of storage that will hold your vectors. The storage pod indexes your vectors (which are created by the inference pods) and searches them. There are three storage shard types available:
 
 + `marqo.basic`
-    + Marqo basic is the cheapest of the shard types. This is good for proof of concept applications and development work. These shards have higher search latency that the other options and each shard has a lower capacity of approximately 1 million documents though 0.5 million is recommended. These shards cannot have any replicas either so they are note recommended for production applications where high availability is a requirement.
+    + Marqo basic is the cheapest of the shard types. This is good for proof of concept applications and development work. These shards have higher search latency that the other options and each shard has a lower capacity of approximately 2 million vectors. These shards cannot have any replicas either so they are note recommended for production applications where high availability is a requirement.
 + `marqo.balanced`
-    + Marqo balanced is the middle tier of the shard types. This is good for production applications where high availability is a requirement. These shards have lower search latency than `marqo.basic` and each shard has a higher capacity of approximately 8 million documents though 4 million is recommended. These shards can have replicas so they are suitable for production applications where high availability is a requirement.
+    + Marqo balanced is the middle tier of the shard types. This is good for production applications where high availability is a requirement. These shards have lower search latency than `marqo.basic` and each shard has a higher capacity of approximately 16 million vectors. These shards can have replicas so they are suitable for production applications where high availability is a requirement.
 + `marqo.performance`
-    + Marqo performance is the highest tier of the shard types. This is good for production applications where high availability and the lowest search latency is a requirement, especially for indexes with tens or hundreds of millions of vectors. These shards have the lowest search latency of all the shard types and each shard has a capacity of approximately 8 million documents though 4 million is recommended. These shards can have replicas so they are suitable for highly available production application with millions of users.
+    + Marqo performance is the highest tier of the shard types. This is good for production applications where high availability and the lowest search latency is a requirement, especially for indexes with tens or hundreds of millions of vectors. These shards have the lowest search latency of all the shard types and each shard has a capacity of approximately 16 million vectors. These shards can have replicas so they are suitable for highly available production application with millions of users.
 
 For the tutorials in this getting started guide we will only use `marqo.basic` shards however if you are deploying a production search with many users we recommend using `marqo.balanced`. For larger enterprises with large number of concurrent searches a `marqo.performance` shard is likely more suitable.
 
@@ -79,7 +79,7 @@ The inference pod type adjusts the infrastructure that is used for inference. In
 + `marqo.GPU`
     + Marqo GPU is the highest tier of the inference pod types. This is suitable for production applications with low latency search and high request concurrency. These pods are significantly faster than `marqo.CPU` pods when indexing or searching with text and/or images.
 
-A common usage pattern is to mix these nodes for different stages of development. For example you can accelerate indexing of images with `marqo.GPU` pods and then swap to `marqo.CPU` pods for searching with only text. You can change your inference configuration at any time by editing the index.
+A common usage pattern is to mix these nodes for different stages of development. For example you can accelerate indexing of images with `marqo.GPU` pods and then swap to `marqo.CPU.large` pods for searching with only text. You can change your inference configuration at any time by editing the index.
 
 ### Number of shards, replicas, and pods
 
