@@ -37,7 +37,7 @@ Head to your [Marqo Cloud console](https://cloud.marqo.ai) and create a new inde
 - Index name: `chatbot-demo-index`
 - Indexing mode: `Text-based`
 - Storage shard type: `marqo.basic`
-- Inference pod type: `marqo.CPU`
+- Inference pod type: `marqo.CPU.small`
 - Number of shards: `1`
 - Number of replicas: `0`
 - Number of inference pods: `1`
