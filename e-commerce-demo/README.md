@@ -4,7 +4,7 @@ https://github.com/marqo-ai/getting_started_marqo_cloud/assets/41710527/28b52cb7
 
 In this tutorial we will build an image search application using Marqo! We will start with an existing code base and then walk through how to customise the behaviour.
 
-The total cost of running this application on will depend on your configuration. This demo will use `marqo.basic` storage and `marqo.CPU.small` inference, you are welcome to use `marqo.GPU` inference however it will cost more. The suggested configuration will cost approximately \$0.1186 per hour and the anticipated time to complete the tutorial is 1 to 2 hours. If you want to index the data faster you can use a `marqo.GPU` \$1.0310 per hour. You don't need to index all the data to benefit from this tutorial however your search results will get better and more interesting as you index more data. Indexing images is significantly faster on a GPU.
+The total cost of running this application on will depend on your configuration. This demo will use `marqo.basic` storage and `marqo.CPU.small` inference, you are welcome to use `marqo.GPU` inference however it will cost more. The suggested configuration will cost approximately \$0.1186 per hour and the anticipated time to complete the tutorial is 1 to 2 hours. If you want to index the data faster you can use a `marqo.GPU` \$1.0310 per hour. You don't need to index all the data to benefit from this tutorial however your search results will get better and more interesting as you index more data. Indexing images is significantly faster on a GPU. If you do index all the data you can expect to see results similar to our [live demo site](https://demo.marqo.ai/).
 
 
 ## Building your first image search application with Marqo
