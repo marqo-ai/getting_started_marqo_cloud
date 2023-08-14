@@ -15,7 +15,7 @@ URL = os.getenv("MARQO_API_URL", None)
 API_KEY = os.getenv("MARQO_API_KEY", None)
 CLIENT = marqo.Client(url=URL, api_key=API_KEY)
 INDEX_NAME = os.getenv("MARQO_INDEX", None)
-REQUEST_CHUNK_SIZE = 64
+REQUEST_CHUNK_SIZE = 32
 CLIENT_BATCH_SIZE = 32
 
 
