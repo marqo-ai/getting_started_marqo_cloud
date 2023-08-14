@@ -72,8 +72,10 @@ The shard type, number of shards, and number of replicas you pick in index creat
 
 The inference pod type adjusts the infrastructure that is used for inference. Inference is the process of creating vectors from your data. A more powerful inference node will reduce latency for indexing and search by creating vectors faster. Inference pod type has a particularly big difference on latency for indexing or searching with images. There are two inference pod types available:
 
-+ `marqo.CPU`
-    + Marqo CPU is the middle tier of the inference pod types. This is suitable for production applications with low latency search. For many application a `marqo.CPU` pod will be sufficient when searching with text however if searching or indexing image and dealing with very high request concurrency these may become too slow.
++ `marqo.CPU.small`
+    + Marqo CPU Small is the smallest and cheapest inference pod available. It is targeted towards very small applications or development and testing where speed is not critical. The `marqo.CPU.small` is a very cost effective way to start out with Marqo and experiment with developing applications on the cloud.
++ `marqo.CPU.large`
+    + Marqo CPU large is the middle tier of the inference pod types. This is suitable for production applications with low latency search. For many applications a `marqo.CPU.large` pod will be sufficient when searching with text however if searching or indexing image and dealing with very high request concurrency these may become too slow.
 + `marqo.GPU`
     + Marqo GPU is the highest tier of the inference pod types. This is suitable for production applications with low latency search and high request concurrency. These pods are significantly faster than `marqo.CPU` pods when indexing or searching with text and/or images.
 
