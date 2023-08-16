@@ -30,7 +30,7 @@ This monolithic architecture is simple yet effective and the concepts in this gu
 Head to your [Marqo Cloud console](https://cloud.marqo.ai) and create a new index. Use the following settings:
 
 - Index name: `e-commerce-demo-index`
-- Indexing mode: `Multimodal`
+- Indexing mode: `Image-compatible`
 - Storage shard type: `marqo.basic`
 - Inference pod type: `marqo.CPU.large`
 - Number of shards: `1`
