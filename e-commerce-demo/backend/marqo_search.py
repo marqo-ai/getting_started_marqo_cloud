@@ -24,7 +24,7 @@ def compose_query(query: str, more_of: str, less_of: str) -> Dict[str, float]:
         query: 1.0,
     }
     if more_of:
-        composed_query[more_of] = 0.75
+        composed_query[more_of] = 0.6
     if less_of:
         composed_query[less_of] = -1.1
 
