@@ -1,6 +1,8 @@
 # Chatbot Application Quickstart
 
-https://github.com/marqo-ai/getting_started_marqo_cloud/assets/41710527/efca6103-bd7e-41e8-a455-a1cc26f10275
+
+https://github.com/marqo-ai/getting_started_marqo_cloud/assets/41710527/108dd1fd-1a39-461d-8516-23952fc16086
+
 
 In this guide we will build a chat bot application using your Marqo Cloud and OpenAI's ChatGPT API. We will start with an existing code base and then walk through how to customise the behaviour.
 
