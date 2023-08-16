@@ -1,6 +1,10 @@
 # Image Search Application Quickstart
 
-https://github.com/marqo-ai/getting_started_marqo_cloud/assets/41710527/28b52cb7-50fb-43d5-b047-21f57ff88d49
+
+
+https://github.com/marqo-ai/getting_started_marqo_cloud/assets/41710527/ae60d405-8ee1-47d6-a719-eeab55bae3bd
+
+
 
 In this tutorial we will build an image search application using Marqo! We will start with an existing code base and then walk through how to customise the behaviour.
 
@@ -30,7 +34,7 @@ This monolithic architecture is simple yet effective and the concepts in this gu
 Head to your [Marqo Cloud console](https://cloud.marqo.ai) and create a new index. Use the following settings:
 
 - Index name: `e-commerce-demo-index`
-- Indexing mode: `Multimodal`
+- Indexing mode: `Image-compatible`
 - Storage shard type: `marqo.basic`
 - Inference pod type: `marqo.CPU.large`
 - Number of shards: `1`

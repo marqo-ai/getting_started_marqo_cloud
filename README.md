@@ -51,7 +51,7 @@ This is self explanatory. This will be the name of your index. You will use this
 
 ### Indexing mode
 
-The indexing mode is effectively a shorthand for your index configuration. Choosing `Test-based` (the default) will automatically choose a model that is suitable for indexing text-only data. Likewise, choosing `Multi-modal` will choose a model that is suitable for indexing text and images. You can view these index settings in detail under the `Hide advanced details` accordion above the estimated cost.
+The indexing mode is effectively a shorthand for your index configuration. Choosing `Text-optimised` (the default) will automatically choose a model that is suitable for indexing text-only data. Likewise, choosing `Image-compatible` will choose a model that is suitable for indexing text and images. You can view these index settings in detail under the `Hide advanced details` accordion above the estimated cost.
 
 ### Storage shard type
 

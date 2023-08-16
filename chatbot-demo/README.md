@@ -35,7 +35,7 @@ This monolithic architecture is simple yet effective and the concepts in this gu
 Head to your [Marqo Cloud console](https://cloud.marqo.ai) and create a new index. Use the following settings:
 
 - Index name: `chatbot-demo-index`
-- Indexing mode: `Text-based`
+- Indexing mode: `Text-optimised`
 - Storage shard type: `marqo.basic`
 - Inference pod type: `marqo.CPU.small`
 - Number of shards: `1`
