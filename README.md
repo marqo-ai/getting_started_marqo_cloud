@@ -103,7 +103,7 @@ For now you can click cancel and return to this page when you are ready to follo
 
 ### Endpoints
 
-Once you have made an index and its creation has completed (usually about 10 minutes) you will be able to copy its endpoint URL from the indexes page on the console.
+Once you have made an index and its creation has completed (usually about 10 minutes) you will be able to copy its endpoint URL from the indexes page on the console. You can either use the URL for each index or you can use `https://api.marqo.ai` in the Python client and it will fetch the index endpoints for you.
 
 ### Testing your endpoint
 
