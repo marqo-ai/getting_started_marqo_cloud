@@ -107,26 +107,21 @@ Once you have made an index and its creation has completed (usually about 10 min
 
 ### Testing your endpoint
 
-If you have created an index you can check that it is up and running via the `/indexes` endpoint. You will need to have created and index and given the inference pods time to finish initializing as described in the previous steps. You can check your indexes via Python or via cURL as follows.
+If you have created an index you can check that it is up and running via the `/indexes` endpoint. You will need to have created and index and given the inference pods time to finish initializing as described in the previous steps. You can check your indexes via Python as follows.
 
-Python:
 ```python
 import marqo
 url = "https://api.marqo.ai"
 api_key = "<your api key goes here>"
-mq = marqo.Client(url, api_key)
+mq = marqo.Client(url, api_key=api_key)
 indexes = mq.get_indexes()
-print(indexes)
-```
-cURL:
-```curl
-curl "https://api.marqo.ai/indexes" -H 'X-API-KEY: <your api key>'
+print([index.index_name for index in indexes['results']])
 ```
 
-You should see output along the lines of
+If you have made an index, you should see output along the lines of
 
 ```json
-{"results": [{"index_name": "my-first-index"}]}
+["my-first-index"]
 ```
 
 ### Deleting an Index
