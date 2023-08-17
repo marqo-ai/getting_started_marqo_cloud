@@ -1,10 +1,10 @@
 Marqo add documents API specification and parameters. 
 
-Query Parameter	Type	Default Value	Description
-refresh	Boolean	true	Forces a refresh after adding documents. This makes the documents available for searching. If you are happy to wait for the system to refresh, you can set this to false for better performance.
-device	String	null	The device used to index the documents. If device is not specified and CUDA devices are available to Marqo (see here for more info), Marqo will speed up the indexing process by using available CUDA devices. Otherwise, the CPU will be used. Options include cpu and cuda, cuda1, cuda2 etc. The cuda option tells Marqo to use any available cuda devices.
-non_tensor_fields	Array of Strings	[]	The fields within these documents to not create tensors for. Tensor search cannot be performed on these fields in these documents; pre-filtering and lexical search are still viable.
-use_existing_tensors	Boolean	false	Setting this to true will get existing tensors for unchanged fields in documents that are indexed with an id. Note: Marqo analyses the field string for updates, so Marqo can't detect a change if a URL points to a different image.
-image_download_headers	Dict	{}	A JSON-serialised, URL encoded dictionary of headers for image download. Can be used to authenticate the images for download.
-mappings	Dict	null	A JSON-serialised, URL encoded dictionary to handle object fields in documents. Check mappings for more information. Mappings are required to create multimodal tensor combination fields - see here for more information
-model_auth	Dict	null	A JSON-serialised, URL encoded dictionary that consists of authorisation details used by Marqo to download non-publicly available models. Check here for more information.
+Add documents parameters	Value Type	Default Value	Description
+documents	Array of objects		An array of documents. Each document is represented as a JSON object. You can optionally set a document's ID with the special _id field. The _id must be a string type. If an ID is not specified, marqo will generate one.
+tensorFields	Array of Strings	[]	The fields within these documents which will be tensor fields, and therefore will have vectors generated for them. Tensor search can only be performed on these fields for these documents. Pre-filtering and lexical search are still viable on text fields which are not included in the tensorFields parameter. For the best recall and speed performance, we recommend minimising the number of different tensor fields for your index. For production use cases where speed and recall are critical, we recommend only a single tensor field for the entire index.
+useExistingTensors	Boolean	false	Setting this to true will get existing tensors for unchanged fields in documents that are indexed with an id. Note: Marqo analyses the field string for updates, so Marqo can't detect a change if a URL points to a different image.
+imageDownloadHeaders	Dict	null	An object that consists of key-value pair headers for image download. Can be used to authenticate the images for download.
+mappings	Dict	null	An object to handle object fields in documents. Check mappings for more information. Mappings are required to create multimodal tensor combination fields - see here for more information
+modelAuth	Dict	null	An object that consists of authorisation details used by Marqo to download non-publicly available models. Check here for more information.
+client_batch_size	Integer	null	A Python client only helper parameter that splits up very large lists of documents into batches of a more manageable size for Marqo
