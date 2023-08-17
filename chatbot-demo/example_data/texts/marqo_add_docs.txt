@@ -17,6 +17,7 @@ mq.index("my-first-index").add_documents([
         "Description": "The EMU is a spacesuit that provides environmental protection, "
                        "mobility, life support, and communications for astronauts",
         "_id": "article_591"
-    }]
+    }],
+    tensor_fields=["Title", "Description"]
 )
 ```
