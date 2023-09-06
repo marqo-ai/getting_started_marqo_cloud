@@ -42,7 +42,10 @@ def print_banner(message: str) -> None:
         + colorama.Style.RESET_ALL
         + " index."
     )
-    print("\nThis dataset is comprised of AI generated E-Commerce products and images.\n")
+    print(
+        "\nThis dataset is comprised of AI generated E-Commerce products and images.\n"
+    )
+
 
 def get_data() -> Dict[str, str]:
     """
@@ -52,7 +55,9 @@ def get_data() -> Dict[str, str]:
     data = pd.read_csv(filename)
     print(data.columns)
     data["image_url"] = data["s3_http"]
-    documents = data[["image_url", "title", "price", "aesthetic_score"]].to_dict(orient="records")
+    documents = data[["image_url", "title", "price", "aesthetic_score"]].to_dict(
+        orient="records"
+    )
     for i in range(len(documents)):
         documents[i]["_id"] = documents[i]["image_url"].split("/")[-1]
         documents[i]["name"] = documents[i]["title"]

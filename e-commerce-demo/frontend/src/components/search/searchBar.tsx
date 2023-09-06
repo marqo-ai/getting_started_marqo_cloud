@@ -1,17 +1,21 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 import './searchBar.css';
+import { fetchProducts } from '../../slices/resultsSlice';
+import { AppDispatch } from '../../store/store';
 
-const SearchBar = ({
-  onSearch,
-}: {
-  onSearch: (query: string, moreOf: string, lessOf: string) => void;
-}) => {
+
+const SearchBar = () => {
   const [query, setQuery] = useState<string>('');
   const [moreOf, setMoreOf] = useState<string>('');
   const [lessOf, setLessOf] = useState<string>('');
 
+  const dispatch = useDispatch<AppDispatch>();
+  const favourites = useSelector((state: RootState) => state.favourites.terms);
+
   const handleSubmit = () => {
-    onSearch(query, moreOf, lessOf);
+    dispatch(fetchProducts({ query, moreOf, lessOf, favourites }));
   };
 
   const handleQueryChange = (e: any) => {

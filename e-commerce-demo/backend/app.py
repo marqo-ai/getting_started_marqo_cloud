@@ -21,8 +21,9 @@ def search_marqo():
     more_of = data.get("moreOf")
     less_of = data.get("lessOf")
     limit = data.get("limit")
+    favourites = data.get("favourites")
     try:
-        results = search(query, more_of, less_of, limit)
+        results = search(query, more_of, less_of, favourites, limit)
         app.logger.debug(f"Found {len(results)} results")
     except Exception as e:
         app.logger.debug(str(e))

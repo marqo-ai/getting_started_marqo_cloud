@@ -1,5 +1,4 @@
-/* CSS */
-.product-card {
+/* .product-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,4 +13,64 @@
 
 .loaded {
   opacity: 1 !important;
+} */
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+.loaded {
+  opacity: 1 !important;
+}
+
+.card {
+  width: 240px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  background-color: #ccc;
+}
+
+
+.card img {
+  width: 100%;
+  height: auto;
+}
+
+.meta {
+  padding: 12px;
+}
+
+.title {
+  font-size: 16px;
+  height: 3rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: #000;
+}
+
+.price {
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px 12px;
+}
+
+.actions button {
+  cursor: pointer;
 }

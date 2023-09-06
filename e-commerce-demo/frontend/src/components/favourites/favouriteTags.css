@@ -1,0 +1,23 @@
+.favourite-tags {
+    max-width: 800px;
+    transition: all 0.4s ease-in-out;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.invisible-favourites {
+    max-height: 0px;
+    opacity: 0;
+    /* transition: all 0.4s ease-in-out; */
+}
+
+.visible-favourites {
+    max-height: 1000px;
+    opacity: 1;
+    /* transition: all 0.4s ease-in-out; */
+}
+
+.fav-heading {
+    font-size: 20px;
+    padding-bottom: 10px;
+}

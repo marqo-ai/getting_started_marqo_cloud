@@ -1,81 +1,49 @@
-import { useEffect, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import ProductCard from '../product/productCard';
-import { API_BASE_URL } from '../../constants';
+import { searchResult } from '../../types/types';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store/store';
+import { addFavourite, removeFavourite, clearFavourites } from '../../slices/favouritesSlice';
 import './resultsDisplay.css';
+import FavouriteTags from '../favourites/favouriteTags';
 
-interface searchResult {
-  id: string;
-  name: string;
-  price: number;
-  image_url: string;
-}
 
-const usePromiseTracker = (promiseCreator: () => Promise<any>, deps: React.DependencyList) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+const ResultsDisplay = () => {
+  const searchResults = useSelector((state: RootState) => state.results.products);
+  const status = useSelector((state: RootState) => state.results.status);
+  const error = useSelector((state: RootState) => state.results.error);
 
-  useEffect(() => {
-    setIsLoading(true);
-    promiseCreator()
-      .catch(setError)
-      .finally(() => setIsLoading(false));
-  }, deps);
+  const isLoading = status === 'loading';
 
-  return { promiseInProgress: isLoading, error };
-};
+  const dispatch = useDispatch();
+  const favourites = useSelector((state: RootState) => state.favourites.terms);
 
-const ResultsDisplay = ({
-  query,
-  moreOf,
-  lessOf,
-}: {
-  query: string;
-  moreOf: string;
-  lessOf: string;
-}) => {
-  const [searchResults, setSearchResults] = useState<searchResult[]>([]);
+  const handleNewFavourite = (term: string) => {
+    dispatch(addFavourite(term));
+  };
 
-  const { promiseInProgress, error } = usePromiseTracker(() => {
-    if (!query.trim()) {
-      return Promise.resolve(); // If the query is empty, immediately resolve the promise
-    }
+  const handleRemoveFavourite = (term: string) => {
+    dispatch(removeFavourite(term));
+  };
 
-    return fetch(API_BASE_URL + '/search_marqo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify({
-        query: query,
-        moreOf: moreOf,
-        lessOf: lessOf,
-        limit: 100,
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((res) => {
-        setSearchResults(res['results']);
-      });
-  }, [query, moreOf, lessOf]);
+  const handleClearFavourites = () => {
+    dispatch(clearFavourites());
+  };
 
   return (
-    <div className={`result-display ${promiseInProgress ? 'loading' : ''}`}>
-      {promiseInProgress ? (
-        <ThreeDots color="#00ffaa" height="100" width="100" />
-      ) : error ? (
-        <div className="error">Error: {error.message}</div>
-      ) : (
-        searchResults.map((result: searchResult) => (
-          <ProductCard key={result.id} product={result} />
-        ))
-      )}
+    <div className='search-results'>
+      <FavouriteTags onDeleteFavourite={handleRemoveFavourite} onResetFavourites={handleClearFavourites} favourites={favourites} />
+      <div className={`result-display ${isLoading ? 'loading' : ''}`}>
+        {isLoading ? (
+          <ThreeDots color="#00ffaa" height="100" width="100" />
+        ) : error ? (
+          <div className="error">Error: {error}</div>
+        ) : (
+          searchResults.map((result: searchResult) => (
+            <ProductCard key={result.id} product={result} onFavourite={handleNewFavourite} />
+          ))
+        )}
+      </div>
     </div>
   );
 };

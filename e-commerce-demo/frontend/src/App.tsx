@@ -1,29 +1,22 @@
-import React from 'react';
+import { Provider } from 'react-redux';
 import { useState } from 'react';
 import ResultsDisplay from './components/results/resultsDisplay';
 import SearchBar from './components/search/searchBar';
 import './App.css';
 import Logo from './components/logo/logo';
+import store from './store/store';
 
 function App() {
-  const [query, setQuery] = useState<string>('');
-  const [moreOf, setMoreOf] = useState<string>('');
-  const [lessOf, setLessOf] = useState<string>('');
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <Logo />
-        <SearchBar
-          onSearch={(query: string, moreOf: string, lessOf: string) => {
-            setQuery(query);
-            setMoreOf(moreOf);
-            setLessOf(lessOf);
-          }}
-        />
-        <ResultsDisplay query={query} moreOf={moreOf} lessOf={lessOf} />
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <header className="App-header">
+          <Logo />
+          <SearchBar/>
+          <ResultsDisplay/>
+        </header>
+      </div>
+    </Provider>
   );
 }
 

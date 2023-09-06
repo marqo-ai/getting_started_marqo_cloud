@@ -19,7 +19,9 @@ class SearchResult(BaseModel):
         return {"title": self.title, "price": self.price, "image_url": self.image_url}
 
 
-def compose_query(query: str, more_of: str, less_of: str) -> Dict[str, float]:
+def compose_query(
+    query: str, more_of: str, less_of: str, favourites: List[str]
+) -> Dict[str, float]:
     composed_query = {
         query: 1.0,
     }
@@ -27,6 +29,10 @@ def compose_query(query: str, more_of: str, less_of: str) -> Dict[str, float]:
         composed_query[more_of] = 0.75
     if less_of:
         composed_query[less_of] = -1.1
+
+    total_fav_weight = 0.5
+    for favourite in favourites:
+        composed_query[favourite] = total_fav_weight / len(favourites)
 
     return composed_query
 
