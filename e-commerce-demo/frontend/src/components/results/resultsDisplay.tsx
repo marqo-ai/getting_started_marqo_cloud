@@ -3,10 +3,8 @@ import ProductCard from '../product/productCard';
 import { searchResult } from '../../types/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
-import { addFavourite, removeFavourite, clearFavourites } from '../../slices/favouritesSlice';
+import { addFavourite } from '../../slices/favouritesSlice';
 import './resultsDisplay.css';
-import FavouriteTags from '../favourites/favouriteTags';
-
 
 const ResultsDisplay = () => {
   const searchResults = useSelector((state: RootState) => state.results.products);
@@ -22,17 +20,8 @@ const ResultsDisplay = () => {
     dispatch(addFavourite(term));
   };
 
-  const handleRemoveFavourite = (term: string) => {
-    dispatch(removeFavourite(term));
-  };
-
-  const handleClearFavourites = () => {
-    dispatch(clearFavourites());
-  };
-
   return (
-    <div className='search-results'>
-      <FavouriteTags onDeleteFavourite={handleRemoveFavourite} onResetFavourites={handleClearFavourites} favourites={favourites} />
+    <div className="search-results">
       <div className={`result-display ${isLoading ? 'loading' : ''}`}>
         {isLoading ? (
           <ThreeDots color="#00ffaa" height="100" width="100" />

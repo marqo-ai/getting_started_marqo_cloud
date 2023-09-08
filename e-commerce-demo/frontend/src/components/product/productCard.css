@@ -22,7 +22,6 @@
   align-items: center;
   transition: all 0.3s ease-in-out;
   opacity: 0;
-
 }
 
 .product-card:hover {
@@ -38,9 +37,8 @@
   border-radius: 10px;
   overflow: hidden;
   position: relative;
-  background-color: #ccc;
+  background-color: #f0f0f0;
 }
-
 
 .card img {
   width: 100%;
@@ -69,8 +67,4 @@
   display: flex;
   justify-content: space-between;
   padding: 0 12px 12px;
-}
-
-.actions button {
-  cursor: pointer;
 }

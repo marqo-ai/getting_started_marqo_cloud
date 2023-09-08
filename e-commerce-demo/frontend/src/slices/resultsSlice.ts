@@ -1,11 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { API_BASE_URL } from '../constants';
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  image_url: string;
-}
+import { SearchRequest, Product } from '../types/types';
 
 interface ResultsState {
   products: Product[];
@@ -21,7 +16,7 @@ const initialState: ResultsState = {
 
 export const fetchProducts = createAsyncThunk(
   'results/fetchProducts',
-  async (params: { query: string; moreOf: string; lessOf: string; favourites: string[] }) => {
+  async (params: SearchRequest) => {
     const response = await fetch(API_BASE_URL + '/search_marqo', {
       method: 'POST',
       headers: {
@@ -33,6 +28,7 @@ export const fetchProducts = createAsyncThunk(
         moreOf: params.moreOf,
         lessOf: params.lessOf,
         favourites: params.favourites,
+        searchSettings: params.searchSettings,
         limit: 100,
       }),
     });
@@ -43,7 +39,7 @@ export const fetchProducts = createAsyncThunk(
 
     const data = await response.json();
     return data.results;
-  }
+  },
 );
 
 export const resultsSlice = createSlice({

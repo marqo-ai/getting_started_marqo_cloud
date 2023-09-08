@@ -6,7 +6,7 @@
   max-width: 1200px;
   width: 90%;
   margin: 20px auto;
-  border: 2px solid #f0f0f0;
+  border: 2px solid #fff;
   border-radius: 10px;
   padding: 20px;
   background-color: #fff;
@@ -15,7 +15,7 @@
 }
 
 .search-bar-input {
-  border: 1px solid #ccc;
+  border: 3px solid #ccc;
   min-height: 40px;
   padding: 10px 20px;
   border-radius: 5px;
@@ -25,7 +25,7 @@
 }
 
 .search-bar-input:focus {
-  border: 1px solid #00ffaa;
+  border: 3px solid #00ffaa;
 }
 
 .search-bar-input:last-child {
@@ -42,7 +42,7 @@
 }
 
 .search-button:hover {
-  background-color: rgb(0, 217, 145);
+  background-color: #22c28c;
 }
 
 @media (min-width: 800px) {

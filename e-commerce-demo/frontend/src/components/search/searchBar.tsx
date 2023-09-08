@@ -5,7 +5,6 @@ import './searchBar.css';
 import { fetchProducts } from '../../slices/resultsSlice';
 import { AppDispatch } from '../../store/store';
 
-
 const SearchBar = () => {
   const [query, setQuery] = useState<string>('');
   const [moreOf, setMoreOf] = useState<string>('');
@@ -14,8 +13,10 @@ const SearchBar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const favourites = useSelector((state: RootState) => state.favourites.terms);
 
+  const searchSettings = useSelector((state: RootState) => state.searchSettings);
+
   const handleSubmit = () => {
-    dispatch(fetchProducts({ query, moreOf, lessOf, favourites }));
+    dispatch(fetchProducts({ query, moreOf, lessOf, favourites, searchSettings }));
   };
 
   const handleQueryChange = (e: any) => {

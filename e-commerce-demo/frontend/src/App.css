@@ -6,10 +6,22 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #020659;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
   font-size: 14px;
   color: white;
+}
+
+.search-settings {
+  padding-top: 20px;
+}
+
+.ant-tooltip-inner {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.ant-tooltip-arrow-content {
+  background-color: rgba(255, 255, 255, 0.7) !important;
 }

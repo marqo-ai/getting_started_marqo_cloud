@@ -1,21 +1,39 @@
 import { Provider } from 'react-redux';
-import { useState } from 'react';
+import { ConfigProvider, Space } from 'antd';
 import ResultsDisplay from './components/results/resultsDisplay';
 import SearchBar from './components/search/searchBar';
 import './App.css';
-import Logo from './components/logo/logo';
 import store from './store/store';
-
+import SearchSettingsModal from './components/searchSettings/searchSettingsModal';
+import FavouriteTags from './components/favourites/favouriteTags';
+import Logo from './components/logo/logo';
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
-        <header className="App-header">
-          <Logo />
-          <SearchBar/>
-          <ResultsDisplay/>
-        </header>
-      </div>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#00ffaa',
+            colorTextLightSolid: '#000',
+            borderRadius: 2,
+            colorBgContainer: '#fff',
+          },
+        }}
+      >
+        <div className="App">
+          <header className="App-header">
+            <Logo />
+            <div className="search-settings">
+              <Space size={'large'}>
+                <SearchSettingsModal />
+                <FavouriteTags />
+              </Space>
+            </div>
+            <SearchBar />
+            <ResultsDisplay />
+          </header>
+        </div>
+      </ConfigProvider>
     </Provider>
   );
 }
