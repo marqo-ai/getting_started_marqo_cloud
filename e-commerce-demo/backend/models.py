@@ -7,11 +7,13 @@ class SearchSettings:
         query_weight: float,
         pos_query_weight: float,
         neg_query_weight: float,
+        custom_instruction_weight: float,
         total_favourite_weight: float,
     ):
         self.query_weight = query_weight
         self.pos_query_weight = pos_query_weight
         self.neg_query_weight = neg_query_weight
+        self.custom_instruction_weight = custom_instruction_weight
         self.total_favourite_weight = total_favourite_weight
 
     @classmethod
@@ -19,9 +21,10 @@ class SearchSettings:
         query_weight = data.get("queryWeight")
         pos_query_weight = data.get("posQueryWeight")
         neg_query_weight = data.get("negQueryWeight")
+        custom_instruction_weight = data.get("customInstructionsWeight")
         total_favourite_weight = data.get("totalFavouriteWeight")
         return SearchSettings(
-            query_weight, pos_query_weight, neg_query_weight, total_favourite_weight
+            query_weight, pos_query_weight, neg_query_weight, custom_instruction_weight, total_favourite_weight
         )
 
 

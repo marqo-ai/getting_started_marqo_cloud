@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row, Slider } from 'antd';
 import { RootState } from '../../store/store';
 import {
+  setCustomInstructionsWeight,
   setNegQueryWeight,
   setPosQueryWeight,
   setQueryWeight,
@@ -23,6 +24,10 @@ const SearchSettings = () => {
 
   const onNegChange = (value: any) => {
     dispatch(setNegQueryWeight(value));
+  };
+
+  const onCustomInstructionsChange = (value: any) => {
+    dispatch(setCustomInstructionsWeight(value));
   };
 
   const onFavChange = (value: any) => {
@@ -97,6 +102,23 @@ const SearchSettings = () => {
         </Col>
         <Col span={4}>
           <div>{searchSettings.totalFavouriteWeight}</div>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={6}>
+          <div>Instruction weight:</div>
+        </Col>
+        <Col span={12}>
+          <Slider
+            min={-2}
+            max={2}
+            step={0.01}
+            onChange={onCustomInstructionsChange}
+            value={searchSettings.customInstructionsWeight}
+          />
+        </Col>
+        <Col span={4}>
+          <div>{searchSettings.customInstructionsWeight}</div>
         </Col>
       </Row>
     </div>

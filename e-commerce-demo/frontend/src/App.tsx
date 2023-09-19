@@ -7,14 +7,15 @@ import store from './store/store';
 import SearchSettingsModal from './components/searchSettings/searchSettingsModal';
 import FavouriteTags from './components/favourites/favouriteTags';
 import Logo from './components/logo/logo';
+import CustomInstructionModal from './components/customInstructions/customInstructionsModal';
 function App() {
   return (
     <Provider store={store}>
       <ConfigProvider
         theme={{
           token: {
-            colorPrimary: '#00ffaa',
-            colorTextLightSolid: '#000',
+            colorPrimary: '#020659',
+            colorTextLightSolid: '#fff',
             borderRadius: 2,
             colorBgContainer: '#fff',
           },
@@ -25,11 +26,12 @@ function App() {
             <Logo />
             <div className="search-settings">
               <Space size={'large'}>
+                <CustomInstructionModal />
                 <SearchSettingsModal />
                 <FavouriteTags />
               </Space>
             </div>
-            <SearchBar />
+            <SearchBar enableMoreOf={true} enableLessOf={true}/>
             <ResultsDisplay />
           </header>
         </div>

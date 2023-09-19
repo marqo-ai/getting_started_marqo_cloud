@@ -2,10 +2,13 @@ import { configureStore, combineReducers, ThunkAction, Action } from '@reduxjs/t
 import resultsReducer from '../slices/resultsSlice';
 import favouritesReducer from '../slices/favouritesSlice';
 import searchSettingsSlice from '../slices/searchSettingsSlice';
+import customInstructionsSlice from '../slices/customInstructionsSlice';
+
 const rootReducer = combineReducers({
   results: resultsReducer,
   favourites: favouritesReducer,
   searchSettings: searchSettingsSlice,
+  customInstructions: customInstructionsSlice,
 });
 
 const store = configureStore({

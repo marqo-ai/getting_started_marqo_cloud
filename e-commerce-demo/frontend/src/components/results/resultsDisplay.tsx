@@ -14,7 +14,6 @@ const ResultsDisplay = () => {
   const isLoading = status === 'loading';
 
   const dispatch = useDispatch();
-  const favourites = useSelector((state: RootState) => state.favourites.terms);
 
   const handleNewFavourite = (term: string) => {
     dispatch(addFavourite(term));
@@ -24,7 +23,7 @@ const ResultsDisplay = () => {
     <div className="search-results">
       <div className={`result-display ${isLoading ? 'loading' : ''}`}>
         {isLoading ? (
-          <ThreeDots color="#00ffaa" height="100" width="100" />
+          <ThreeDots color="#020659" height="100" width="100" />
         ) : error ? (
           <div className="error">Error: {error}</div>
         ) : (

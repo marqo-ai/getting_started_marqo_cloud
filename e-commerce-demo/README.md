@@ -123,6 +123,11 @@ Here are some searches to try out, you can use the three search fields in differ
 | I have a gala coming up | | |
 | Some shoes that I can skateboard in | converse | |
 
+
+This demo also includes a favourting system. Any text or images that you favourite will be added to all queries. Favouriting more things gives you more of an average across the items. Favouriting lots of images may slow down your search on a CPU inference node.
+
+You can also edit the weights assigned to each part of the search via the search settings menu. This will let you experiment with the behaviour of the search.
+
 ### Customise (optional)
 
 We can make changes to the code to change how the search behaves. In this section we will list some changes that you can experiment with the customise the search, changes to the backend code will automatically update the server.
@@ -134,25 +139,49 @@ Open up `./e-commerce-demo/backend/marqo_search.py`.
 The `compose_query` function is where we construct the query and its weights for Marqo. This is what enables for "more of this and less of that" style searches in the UI.
 
 ```python
-def compose_query(query: str, more_of: str, less_of: str) -> Dict[str, float]:
-    composed_query = {
-        query: 1.0,
-    }
-    if more_of:
-        composed_query[more_of] = 0.75
-    if less_of:
-        composed_query[less_of] = -1.1
+DEFAULT_SEARCH_SETTINGS = SearchSettings(
+    query_weight=1.0,
+    pos_query_weight=0.75,
+    neg_query_weight=-1.1,
+    total_favourite_weight=0.5,
+)
 
+
+def compose_query(
+    query: str,
+    more_of: str,
+    less_of: str,
+    favourites: List[str],
+    search_settings: SearchSettings = None,
+) -> Dict[str, float]:
+    if not search_settings:
+        search_settings = DEFAULT_SEARCH_SETTINGS
+
+    composed_query = {}
+    if query:
+        composed_query = {query: search_settings.query_weight}
+    if more_of:
+        more_term = query + ", " + more_of
+        composed_query[more_term] = search_settings.pos_query_weight
+    if less_of:
+        composed_query[less_of] = search_settings.neg_query_weight
+
+    total_fav_weight = search_settings.total_favourite_weight
+    for favourite in favourites:
+        composed_query[favourite] = total_fav_weight / len(favourites)
+
+    if not composed_query:
+        composed_query = {"": 1.0}
     return composed_query
 ```
 
-You can experiment with these weights to see how they impact your searches. For example, if you want to make the `more_of` term more important you can increase its weight from `0.5` to `0.75`.
+The weights in search settings are configurable via the UI however you can experiment with changing the function to explore different behaviours.
 
-You could also add prompting into the query, for example you could force "higher quality" images in your results by adding `composed_query["high quality, high resolution"] = 0.2` to the query.
+For example, you could change the `more_term` construction. Currently it will also include the main query, this is done to avoid a query for `watch` with more of `gold` getting divereted away from watch and towards gold. Try removing this to see the behaviour without it.
 
-Or perhaps you want to suppress some of the stranger AI generated images in the dataset, you could add `composed_query["weird, deformed, AI generated"] = -0.3` to the query.
+You could also experiment with how favourites are handled by modifying the contributes for text and image favourites separately.
 
-These prompting strategies are a powerful way to customise your search experience.
+You can also add implicit query expansions, for example every query could have a negative weight on `bad, ai generated, weird` to avoid these images in all searches without the user having to specify this.
 
 #### Adding score modifiers
 

@@ -16,13 +16,19 @@ export interface SearchSettings {
   queryWeight: number;
   posQueryWeight: number;
   negQueryWeight: number;
+  customInstructionsWeight: number;
   totalFavouriteWeight: number;
 }
 
 export interface SearchRequest {
   query: string;
-  moreOf: string;
-  lessOf: string;
+  moreOf: string | null;
+  lessOf: string | null;
+  customInstructions: string | null;
   favourites: string[];
   searchSettings: SearchSettings;
+}
+
+export interface CustomInstructions {
+  instructions: string | null;
 }

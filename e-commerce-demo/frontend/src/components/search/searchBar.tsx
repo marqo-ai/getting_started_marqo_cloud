@@ -5,18 +5,27 @@ import './searchBar.css';
 import { fetchProducts } from '../../slices/resultsSlice';
 import { AppDispatch } from '../../store/store';
 
-const SearchBar = () => {
+type SearchBarProps = {
+  enableMoreOf: boolean;
+  enableLessOf: boolean;
+};
+
+const SearchBar = ({ enableMoreOf=true, enableLessOf=true }: SearchBarProps) => {
   const [query, setQuery] = useState<string>('');
   const [moreOf, setMoreOf] = useState<string>('');
   const [lessOf, setLessOf] = useState<string>('');
 
   const dispatch = useDispatch<AppDispatch>();
   const favourites = useSelector((state: RootState) => state.favourites.terms);
-
+  const customInstructions = useSelector(
+    (state: RootState) => state.customInstructions.instructions,
+  );
   const searchSettings = useSelector((state: RootState) => state.searchSettings);
 
   const handleSubmit = () => {
-    dispatch(fetchProducts({ query, moreOf, lessOf, favourites, searchSettings }));
+    dispatch(
+      fetchProducts({ query, moreOf, lessOf, customInstructions, favourites, searchSettings }),
+    );
   };
 
   const handleQueryChange = (e: any) => {
@@ -47,6 +56,7 @@ const SearchBar = () => {
         onChange={handleQueryChange}
         onKeyDown={handleKeyPress}
       />
+      {enableMoreOf &&
       <input
         className="search-bar-input"
         type="text"
@@ -55,6 +65,8 @@ const SearchBar = () => {
         onChange={handleMoreChange}
         onKeyDown={handleKeyPress}
       />
+}
+      {enableLessOf &&
       <input
         className="search-bar-input"
         type="text"
@@ -63,6 +75,7 @@ const SearchBar = () => {
         onChange={handleLessChange}
         onKeyDown={handleKeyPress}
       />
+}
       <button className="search-button" onClick={handleSubmit}>
         Search
       </button>

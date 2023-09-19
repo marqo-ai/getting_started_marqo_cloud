@@ -27,6 +27,7 @@ export const fetchProducts = createAsyncThunk(
         query: params.query,
         moreOf: params.moreOf,
         lessOf: params.lessOf,
+        customInstructions: params.customInstructions,
         favourites: params.favourites,
         searchSettings: params.searchSettings,
         limit: 100,
@@ -50,10 +51,12 @@ export const resultsSlice = createSlice({
     builder
       .addCase(fetchProducts.pending, (state) => {
         state.status = 'loading';
+        state.error = null;
       })
       .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<Product[]>) => {
         state.status = 'succeeded';
         state.products = action.payload;
+        state.error = null;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'failed';

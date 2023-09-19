@@ -22,12 +22,13 @@ def search_marqo():
     query = data.get("query")
     more_of = data.get("moreOf")
     less_of = data.get("lessOf")
+    custom_instructions = data.get("customInstructions")
     limit = data.get("limit")
     favourites = data.get("favourites")
     search_settings = SearchSettings.from_dict(data.get("searchSettings"))
 
     try:
-        results = search(query, more_of, less_of, favourites, limit, search_settings)
+        results = search(query, more_of, less_of, custom_instructions, favourites, limit, search_settings)
         app.logger.debug(f"Found {len(results)} results")
     except Exception as e:
         app.logger.debug(str(e))
