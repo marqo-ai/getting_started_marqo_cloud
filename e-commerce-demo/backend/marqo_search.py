@@ -1,6 +1,6 @@
 import marqo
 import os
-from models import SearchSettings, SearchResult
+from models import SearchSettings, SearchResult, STYLE_MAPPING
 from typing import List, Dict
 from dotenv import load_dotenv
 
@@ -25,14 +25,21 @@ def compose_query(
     custom_instructions: str,
     favourites: List[str],
     search_settings: SearchSettings = None,
+    style: str = None,
 ) -> Dict[str, float]:
+
+    style_modifier = STYLE_MAPPING.get(style)
+
+
     if not search_settings:
         search_settings = DEFAULT_SEARCH_SETTINGS
 
     composed_query = {}
     
     if query:
-        composed_query = {query: search_settings.query_weight}
+        if style_modifier:
+            query = style_modifier.replace("<QUERY>", query)
+        composed_query[query] = search_settings.query_weight
     
     if more_of:
         more_term = query + ", " + more_of
@@ -49,7 +56,7 @@ def compose_query(
         composed_query[favourite] = total_fav_weight / len(favourites)
 
     if not composed_query:
-        composed_query = {"": 0.00000001}
+        return {"": 1}
     
     return composed_query
 
