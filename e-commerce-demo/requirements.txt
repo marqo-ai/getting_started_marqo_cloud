@@ -1,5 +1,5 @@
-colorama==0.4.6
-marqo==1.1.0
-pandas==2.0.3
-tqdm==4.65.0
+colorama
+marqo
+pandas
+tqdm
 python-dotenv

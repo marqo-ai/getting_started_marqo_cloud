@@ -1,31 +1,58 @@
 import { useState } from 'react';
-import { Card, Image } from 'antd';
+import { Product } from '../../types/types';
+import { Image, Button } from 'antd';
+import { HeartFilled } from '@ant-design/icons';
 import './productCard.css';
 
-const { Meta } = Card;
-
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  image_url: string;
-}
-
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({
+  product,
+  onFavourite,
+}: {
+  product: Product;
+  onFavourite: (content: string, type: string) => void;
+}) => {
   const [isLoaded, setIsLoaded] = useState(false);
+
   const handleImageLoad = () => {
     setIsLoaded(true);
   };
 
+  const handleFavourite = (type: string) => {
+    if (type === 'name') {
+      onFavourite(product.name, type);
+    } else {
+      onFavourite(product.image_url, type);
+    }
+  };
+
   return (
     <div id={product.id} className={`product-card ${isLoaded ? 'loaded' : ''}`}>
-      <Card
-        hoverable
-        style={{ width: 240 }}
-        cover={<Image src={product.image_url} onLoad={handleImageLoad} />}
-      >
-        <Meta title={product.name} description={`$${product.price}`} />
-      </Card>
+      <div className="card">
+        {/* <img src={product.image_url} alt={product.name} onLoad={handleImageLoad} /> */}
+        <Image width={250} src={product.image_url} alt={product.name} onLoad={handleImageLoad} />
+        <div className="meta">
+          <div className="title">{product.name}</div>
+          <div className="price">${product.price}</div>
+        </div>
+        <div className="actions">
+          <Button
+            type="primary"
+            onClick={() => {
+              handleFavourite('name');
+            }}
+          >
+            <HeartFilled /> Name
+          </Button>
+          <Button
+            type="primary"
+            onClick={() => {
+              handleFavourite('image');
+            }}
+          >
+            <HeartFilled /> Image
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

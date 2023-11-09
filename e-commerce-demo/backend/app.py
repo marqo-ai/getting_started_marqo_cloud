@@ -1,7 +1,9 @@
 import logging
 from flask import Flask, jsonify, request
 from marqo_search import search
+from models import SearchSettings, AdvancedSettings
 from flask_cors import CORS
+
 
 app = Flask(__name__)
 CORS(app)
@@ -20,14 +22,24 @@ def search_marqo():
     query = data.get("query")
     more_of = data.get("moreOf")
     less_of = data.get("lessOf")
-    limit = data.get("limit")
-    try:
-        results = search(query, more_of, less_of, limit)
-        app.logger.debug(f"Found {len(results)} results")
-    except Exception as e:
-        app.logger.debug(str(e))
+    custom_instructions = data.get("customInstructions")
+    favourites = data.get("favourites")
+    style = data.get("style")
+    search_settings = SearchSettings.from_dict(data.get("searchSettings"))
+    advanced_settings = AdvancedSettings.from_dict(data.get("advancedSettings"))
 
-    response = {"results": [dict(r) for r in results]}
+    results = search(
+        query=query,
+        more_of=more_of,
+        less_of=less_of,
+        custom_instructions=custom_instructions,
+        favourites=favourites,
+        search_settings=search_settings,
+        style=style,
+        advanced_settings=advanced_settings,
+    )
+
+    response = {"results": [r.to_dict() for r in results]}
     return response, 200
 
 

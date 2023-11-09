@@ -15,8 +15,18 @@ URL = os.getenv("MARQO_API_URL", None)
 API_KEY = os.getenv("MARQO_API_KEY", None)
 CLIENT = marqo.Client(url=URL, api_key=API_KEY)
 INDEX_NAME = os.getenv("MARQO_INDEX", None)
-REQUEST_CHUNK_SIZE = 32
+PROGRESS_UPDATE_INTERVAL = 64
 CLIENT_BATCH_SIZE = 32
+
+MAPPINGS = {
+    "multimodal": {
+        "type":  "multimodal_combination",
+        "weights": {
+            "name": 0.1,
+            "image_url": 0.9
+        }
+    }
+}
 
 
 def print_banner(message: str) -> None:
@@ -60,8 +70,13 @@ def get_data() -> Dict[str, str]:
     )
     for i in range(len(documents)):
         documents[i]["_id"] = documents[i]["image_url"].split("/")[-1]
-        documents[i]["name"] = documents[i]["title"]
+        multimodal_field = {
+            "name": documents[i]["title"],
+            "image_url": documents[i]["image_url"],
+        }
+        documents[i]["multimodal"] = multimodal_field
         del documents[i]["title"]
+        del documents[i]["image_url"]
 
     random.shuffle(documents)
     print("Data fetched.\n")
@@ -72,18 +87,20 @@ def index_data(documents: Dict[str, str]) -> None:
     """
     Index the data into Marqo
     """
-    print(f"Indexing data, updating progress every {REQUEST_CHUNK_SIZE} documents.")
-    for i in tqdm(range(0, len(documents), REQUEST_CHUNK_SIZE), desc="Indexing data"):
-        chunk = documents[i : i + REQUEST_CHUNK_SIZE]
+    print(f"Indexing data, updating progress every {PROGRESS_UPDATE_INTERVAL} documents.")
+    for i in tqdm(range(0, len(documents), PROGRESS_UPDATE_INTERVAL), desc="Indexing data"):
+        chunk = documents[i : i + PROGRESS_UPDATE_INTERVAL]
 
         CLIENT.index(INDEX_NAME).add_documents(
-            chunk, client_batch_size=CLIENT_BATCH_SIZE, tensor_fields=["image_url"]
+            chunk, 
+            client_batch_size=CLIENT_BATCH_SIZE, 
+            tensor_fields=["multimodal"],
+            mappings=MAPPINGS
         )
 
     print(
         colorama.Fore.GREEN + "\nFinished indexing data!\n" + colorama.Style.RESET_ALL
     )
-
 
 def setup_application() -> None:
     """
