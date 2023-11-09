@@ -1,9 +1,7 @@
 # Image Search Application Quickstart
 
 
-
-https://github.com/marqo-ai/getting_started_marqo_cloud/assets/41710527/ae60d405-8ee1-47d6-a719-eeab55bae3bd
-
+https://github.com/marqo-ai/getting_started_marqo_cloud/assets/41710527/bf06b4a0-803c-4f9c-99f7-feeac63d5b50
 
 
 In this tutorial we will build an image search application using Marqo! We will start with an existing code base and then walk through how to customise the behaviour.
