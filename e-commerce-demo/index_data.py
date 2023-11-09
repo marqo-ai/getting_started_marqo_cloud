@@ -102,7 +102,6 @@ def index_data(documents: Dict[str, str]) -> None:
         colorama.Fore.GREEN + "\nFinished indexing data!\n" + colorama.Style.RESET_ALL
     )
 
-from workercontext import MultiWorker
 def setup_application() -> None:
     """
     Driver function to do all the set up.

@@ -15,9 +15,12 @@ export const searchStyleSlice = createSlice({
     setSearchStyle: (state, action: PayloadAction<string | null>) => {
       state.style = action.payload;
     },
+    resetSearchStyle: (state) => {
+      state.style = null;
+    },
   },
 });
 
-export const { setSearchStyle } = searchStyleSlice.actions;
+export const { setSearchStyle, resetSearchStyle } = searchStyleSlice.actions;
 
 export default searchStyleSlice.reducer;

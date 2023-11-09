@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import './searchBar.css';
 import { fetchProducts } from '../../slices/resultsSlice';
 import { AppDispatch } from '../../store/store';
+
+import './searchBar.css';
 
 type SearchBarProps = {
   enableMoreOf: boolean;
   enableLessOf: boolean;
 };
 
-const SearchBar = ({ enableMoreOf=true, enableLessOf=true }: SearchBarProps) => {
+const SearchBar = ({ enableMoreOf = true, enableLessOf = true }: SearchBarProps) => {
   const [query, setQuery] = useState<string>('');
   const [moreOf, setMoreOf] = useState<string>('');
   const [lessOf, setLessOf] = useState<string>('');
@@ -21,10 +22,21 @@ const SearchBar = ({ enableMoreOf=true, enableLessOf=true }: SearchBarProps) => 
     (state: RootState) => state.customInstructions.instructions,
   );
   const searchSettings = useSelector((state: RootState) => state.searchSettings);
+  const style = useSelector((state: RootState) => state.searchStyle.style);
+  const advancedSettings = useSelector((state: RootState) => state.advancedSettings);
 
   const handleSubmit = () => {
     dispatch(
-      fetchProducts({ query, moreOf, lessOf, customInstructions, favourites, searchSettings }),
+      fetchProducts({
+        query,
+        moreOf,
+        lessOf,
+        customInstructions,
+        favourites,
+        searchSettings,
+        style,
+        advancedSettings,
+      }),
     );
   };
 
@@ -56,26 +68,26 @@ const SearchBar = ({ enableMoreOf=true, enableLessOf=true }: SearchBarProps) => 
         onChange={handleQueryChange}
         onKeyDown={handleKeyPress}
       />
-      {enableMoreOf &&
-      <input
-        className="search-bar-input"
-        type="text"
-        placeholder="More of this..."
-        value={moreOf}
-        onChange={handleMoreChange}
-        onKeyDown={handleKeyPress}
-      />
-}
-      {enableLessOf &&
-      <input
-        className="search-bar-input"
-        type="text"
-        placeholder="Less of this..."
-        value={lessOf}
-        onChange={handleLessChange}
-        onKeyDown={handleKeyPress}
-      />
-}
+      {enableMoreOf && (
+        <input
+          className="search-bar-input"
+          type="text"
+          placeholder="More of this..."
+          value={moreOf}
+          onChange={handleMoreChange}
+          onKeyDown={handleKeyPress}
+        />
+      )}
+      {enableLessOf && (
+        <input
+          className="search-bar-input"
+          type="text"
+          placeholder="Less of this..."
+          value={lessOf}
+          onChange={handleLessChange}
+          onKeyDown={handleKeyPress}
+        />
+      )}
       <button className="search-button" onClick={handleSubmit}>
         Search
       </button>

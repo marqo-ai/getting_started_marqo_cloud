@@ -30,7 +30,8 @@ export const fetchProducts = createAsyncThunk(
         customInstructions: params.customInstructions,
         favourites: params.favourites,
         searchSettings: params.searchSettings,
-        limit: 100,
+        style: params.style,
+        advancedSettings: params.advancedSettings,
       }),
     });
 

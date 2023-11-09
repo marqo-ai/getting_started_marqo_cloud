@@ -19,6 +19,16 @@ export interface SearchSettings {
   customInstructionsWeight: number;
   totalFavouriteWeight: number;
 }
+export interface SearchRequest {
+  query: string;
+  moreOf: string | null;
+  lessOf: string | null;
+  customInstructions: string | null;
+  favourites: string[];
+  searchSettings: SearchSettings;
+  style: string | null;
+  advancedSettings: AdvancedSettings;
+}
 
 export interface SearchRequest {
   query: string;
@@ -31,4 +41,11 @@ export interface SearchRequest {
 
 export interface CustomInstructions {
   instructions: string | null;
+}
+
+export interface AdvancedSettings {
+  autoPrefix: boolean;
+  implicitMoreExpansion: boolean;
+  customPrefix: string;
+  limit: number;
 }

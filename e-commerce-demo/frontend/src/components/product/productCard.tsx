@@ -9,7 +9,7 @@ const ProductCard = ({
   onFavourite,
 }: {
   product: Product;
-  onFavourite: (content: string) => void;
+  onFavourite: (content: string, type: string) => void;
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -17,14 +17,12 @@ const ProductCard = ({
     setIsLoaded(true);
   };
 
-  const favoriteName = () => {
-    console.log(`Favorited name: ${product.name}`);
-    onFavourite(product.name);
-  };
-
-  const favoriteImage = () => {
-    console.log(`Favorited image: ${product.image_url}`);
-    onFavourite(product.image_url);
+  const handleFavourite = (type: string) => {
+    if (type === 'name') {
+      onFavourite(product.name, type);
+    } else {
+      onFavourite(product.image_url, type);
+    }
   };
 
   return (
@@ -37,10 +35,20 @@ const ProductCard = ({
           <div className="price">${product.price}</div>
         </div>
         <div className="actions">
-          <Button type="primary" onClick={favoriteName}>
+          <Button
+            type="primary"
+            onClick={() => {
+              handleFavourite('name');
+            }}
+          >
             <HeartFilled /> Name
           </Button>
-          <Button type="primary" onClick={favoriteImage}>
+          <Button
+            type="primary"
+            onClick={() => {
+              handleFavourite('image');
+            }}
+          >
             <HeartFilled /> Image
           </Button>
         </div>

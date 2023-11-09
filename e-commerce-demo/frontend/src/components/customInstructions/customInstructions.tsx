@@ -23,7 +23,7 @@ const CustomInstructions = () => {
         rows={4}
         onChange={handleInstructionUpdate}
         value={customInstructions === null ? '' : customInstructions}
-        placeholder='Provide some general information about your personal preferences'
+        placeholder="Provide some general information about your personal preferences"
       />
     </div>
   );

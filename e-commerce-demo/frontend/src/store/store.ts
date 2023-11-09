@@ -4,6 +4,7 @@ import favouritesReducer from '../slices/favouritesSlice';
 import searchSettingsSlice from '../slices/searchSettingsSlice';
 import customInstructionsSlice from '../slices/customInstructionsSlice';
 import searchStyleSlice from '../slices/searchStyleSlice';
+import advancedSettingsSlice from '../slices/advancedSettingsSlice';
 
 const rootReducer = combineReducers({
   results: resultsReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   searchSettings: searchSettingsSlice,
   customInstructions: customInstructionsSlice,
   searchStyle: searchStyleSlice,
+  advancedSettings: advancedSettingsSlice,
 });
 
 const store = configureStore({
