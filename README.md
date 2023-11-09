@@ -51,18 +51,18 @@ This is self explanatory. This will be the name of your index. You will use this
 
 ### Indexing mode
 
-The indexing mode is effectively a shorthand for your index configuration. Choosing `Test-based` (the default) will automatically choose a model that is suitable for indexing text-only data. Likewise, choosing `Multi-modal` will choose a model that is suitable for indexing text and images. You can view these index settings in detail under the `Hide advanced details` accordion above the estimated cost.
+The indexing mode is effectively a shorthand for your index configuration. Choosing `Text-optimised` (the default) will automatically choose a model that is suitable for indexing text-only data. Likewise, choosing `Image-compatible` will choose a model that is suitable for indexing text and images. You can view these index settings in detail under the `Hide advanced details` accordion above the estimated cost.
 
 ### Storage shard type
 
 The storage shard type is the type of storage that will hold your vectors. The storage pod indexes your vectors (which are created by the inference pods) and searches them. There are three storage shard types available:
 
 + `marqo.basic`
-    + Marqo basic is the cheapest of the shard types. This is good for proof of concept applications and development work. These shards have higher search latency that the other options and each shard has a lower capacity of approximately 1 million documents though 0.5 million is recommended. These shards cannot have any replicas either so they are note recommended for production applications where high availability is a requirement.
+    + Marqo basic is the cheapest of the shard types. This is good for proof of concept applications and development work. These shards have higher search latency that the other options and each shard has a lower capacity of approximately 2 million vectors. These shards cannot have any replicas either so they are note recommended for production applications where high availability is a requirement.
 + `marqo.balanced`
-    + Marqo balanced is the middle tier of the shard types. This is good for production applications where high availability is a requirement. These shards have lower search latency than `marqo.basic` and each shard has a higher capacity of approximately 8 million documents though 4 million is recommended. These shards can have replicas so they are suitable for production applications where high availability is a requirement.
+    + Marqo balanced is the middle tier of the shard types. This is good for production applications where high availability is a requirement. These shards have lower search latency than `marqo.basic` and each shard has a higher capacity of approximately 16 million vectors. These shards can have replicas so they are suitable for production applications where high availability is a requirement.
 + `marqo.performance`
-    + Marqo performance is the highest tier of the shard types. This is good for production applications where high availability and the lowest search latency is a requirement, especially for indexes with tens or hundreds of millions of vectors. These shards have the lowest search latency of all the shard types and each shard has a capacity of approximately 8 million documents though 4 million is recommended. These shards can have replicas so they are suitable for highly available production application with millions of users.
+    + Marqo performance is the highest tier of the shard types. This is good for production applications where high availability and the lowest search latency is a requirement, especially for indexes with tens or hundreds of millions of vectors. These shards have the lowest search latency of all the shard types and each shard has a capacity of approximately 16 million vectors. These shards can have replicas so they are suitable for highly available production application with millions of users.
 
 For the tutorials in this getting started guide we will only use `marqo.basic` shards however if you are deploying a production search with many users we recommend using `marqo.balanced`. For larger enterprises with large number of concurrent searches a `marqo.performance` shard is likely more suitable.
 
@@ -70,14 +70,16 @@ The shard type, number of shards, and number of replicas you pick in index creat
 
 ### Inference pod type
 
-The inference pod type adjusts the infrastructure that is used for inference. Inference is the process of creating vectors from your data. A more powerful inference node will reduce latency for indexing and search by creating vectors faster. Inference pod type has a particularly big difference on latency for indexing or searching with images. There are two inference pod types available:
+The inference pod type adjusts the infrastructure that is used for inference. Inference is the process of creating vectors from your data. A more powerful inference node will reduce latency for indexing and search by creating vectors faster. Inference pod type has a particularly big difference on latency for indexing or searching with images. There are three inference pod types available:
 
-+ `marqo.CPU`
-    + Marqo CPU is the middle tier of the inference pod types. This is suitable for production applications with low latency search. For many application a `marqo.CPU` pod will be sufficient when searching with text however if searching or indexing image and dealing with very high request concurrency these may become too slow.
++ `marqo.CPU.small`
+    + Marqo CPU Small is the smallest and cheapest inference pod available. It is targeted towards very small applications or development and testing where speed is not critical, this pod is not sufficient for most multimodal models and is best used for text only models. The `marqo.CPU.small` is a very cost effective way to start out with Marqo and experiment with developing applications on the cloud. 
++ `marqo.CPU.large`
+    + Marqo CPU large is the middle tier of the inference pod types. This is suitable for production applications with low latency search. For many applications a `marqo.CPU.large` pod will be sufficient when searching with text however if searching or indexing image and dealing with very high request concurrency these may become too slow.
 + `marqo.GPU`
-    + Marqo GPU is the highest tier of the inference pod types. This is suitable for production applications with low latency search and high request concurrency. These pods are significantly faster than `marqo.CPU` pods when indexing or searching with text and/or images.
+    + Marqo GPU is the highest tier of the inference pod types. This is suitable for production applications with low latency search and high request concurrency. These pods are significantly faster than `marqo.CPU.large` pods when indexing or searching with text and/or images. `marqo.GPU` is significantly faster when working with images.
 
-A common usage pattern is to mix these nodes for different stages of development. For example you can accelerate indexing of images with `marqo.GPU` pods and then swap to `marqo.CPU` pods for searching with only text. You can change your inference configuration at any time by editing the index.
+A common usage pattern is to mix these nodes for different stages of development. For example you can accelerate indexing of images with `marqo.GPU` pods and then swap to `marqo.CPU.large` pods for searching with only text. You can change your inference configuration at any time by editing the index.
 
 ### Number of shards, replicas, and pods
 
@@ -101,30 +103,25 @@ For now you can click cancel and return to this page when you are ready to follo
 
 ### Endpoints
 
-Once you have made an index and its creation has completed (usually about 10 minutes) you will be able to copy its endpoint URL from the indexes page on the console.
+Once you have made an index and its creation has completed (usually about 10 minutes) you will be able to copy its endpoint URL from the indexes page on the console. You can either use the URL for each index or you can use `https://api.marqo.ai` in the Python client and it will fetch the index endpoints for you.
 
 ### Testing your endpoint
 
-If you have created an index you can check that it is up and running via the `/indexes` endpoint. You will need to have created and index and given the inference pods time to finish initializing as described in the previous steps. You can check your indexes via Python or via cURL as follows.
+If you have created an index you can check that it is up and running via the `/indexes` endpoint. You will need to have created and index and given the inference pods time to finish initializing as described in the previous steps. You can check your indexes via Python as follows.
 
-Python:
 ```python
 import marqo
 url = "https://api.marqo.ai"
 api_key = "<your api key goes here>"
-mq = marqo.Client(url, api_key)
+mq = marqo.Client(url, api_key=api_key)
 indexes = mq.get_indexes()
-print(indexes)
-```
-cURL:
-```curl
-curl "https://api.marqo.ai/indexes" -H 'X-API-KEY: <your api key>'
+print([index.index_name for index in indexes['results']])
 ```
 
-You should see output along the lines of
+If you have made an index, you should see output along the lines of
 
 ```json
-{"results": [{"index_name": "my-first-index"}]}
+["my-first-index"]
 ```
 
 ### Deleting an Index

@@ -1,12 +1,14 @@
 # Chatbot Application Quickstart
 
-https://github.com/marqo-ai/getting_started_marqo_cloud/assets/41710527/efca6103-bd7e-41e8-a455-a1cc26f10275
+
+https://github.com/marqo-ai/getting_started_marqo_cloud/assets/41710527/108dd1fd-1a39-461d-8516-23952fc16086
+
 
 In this guide we will build a chat bot application using your Marqo Cloud and OpenAI's ChatGPT API. We will start with an existing code base and then walk through how to customise the behaviour.
 
 To begin you will need to create an API key for OpenAI, [get started here](https://openai.com/blog/openai-api). Once you have an API key, save it for use later in this tutorial.
 
-This demo will use `marqo.basic` storage and `marqo.CPU` inference, the amount of data is very small. The suggested configuration will cost approximately \$0.3780 per hour and the anticipated time to complete the tutorial is 1 to 2 hours. You will also be charged by OpenAI for usage of their ChatGPT API though the cost is minimal.
+This demo will use `marqo.basic` storage and `marqo.CPU.small` inference, the amount of data is very small. The suggested configuration will cost approximately \$0.1186 per hour and the anticipated time to complete the tutorial is 1 to 2 hours. You will also be charged by OpenAI for usage of their ChatGPT API though the cost is minimal.
 
 The application also depends upon the `gpt-4-0613` model or the `gpt-3.5-turbo-0613` model from OpenAI, please refer to [their pricing](https://openai.com/pricing). `gpt-4-0613` is the default as it is significantly better at using the functions API. If you do not have access to GPT4's API or want to use a cheaper model then just swap to `gpt-3.5-turbo-0613` in `./backend/ai_chat.py`.
 
@@ -35,9 +37,9 @@ This monolithic architecture is simple yet effective and the concepts in this gu
 Head to your [Marqo Cloud console](https://cloud.marqo.ai) and create a new index. Use the following settings:
 
 - Index name: `chatbot-demo-index`
-- Indexing mode: `Text-based`
+- Indexing mode: `Text-optimised`
 - Storage shard type: `marqo.basic`
-- Inference pod type: `marqo.CPU`
+- Inference pod type: `marqo.CPU.small`
 - Number of shards: `1`
 - Number of replicas: `0`
 - Number of inference pods: `1`
@@ -155,6 +157,8 @@ docker run -p 80:80 --env MARQO_API_URL="$MARQO_API_URL" --env MARQO_API_KEY="$M
 The application should now be running on `http://localhost/`.
 
 ## Deploying on Elastic Beanstalk
+
+NOTE: To enable the streaming of text from the server to the UI (that creates the typing effect) you will need to disable proxy buffering on your Elastic Beanstalk environment. The way to do this will depend on your Elasticbeanstalk configuration, if you are using a single instance as is done here in the demo then you will need to update the NGINX configuration on the EC2 machine. Please refer to the AWS docs for extending your configuration [here](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/platforms-linux-extend.html).
 
 Initialise the Elastic Beanstalk project:
 ```
