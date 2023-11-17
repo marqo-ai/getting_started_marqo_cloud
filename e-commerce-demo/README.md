@@ -136,60 +136,61 @@ You can also edit the weights assigned to each part of the search via the search
 
 We can make changes to the code to change how the search behaves. In this section we will list some changes that you can experiment with the customise the search, changes to the backend code will automatically update the server.
 
-#### Updating query construction
+#### Updating the default parameters
 
-Open up `./e-commerce-demo/backend/marqo_search.py`.
+Open up `./e-commerce-demo/backend/config.py`.
 
-The `compose_query` function is where we construct the query and its weights for Marqo. This is what enables for "more of this and less of that" style searches in the UI.
+The behaviour is goverened by a set of default parameters.
 
 ```python
+QUERY_PREFIX = "e-commerce listing for"
+
 DEFAULT_SEARCH_SETTINGS = SearchSettings(
     query_weight=1.0,
     pos_query_weight=0.75,
     neg_query_weight=-1.1,
+    custom_instruction_weight=0.3,
     total_favourite_weight=0.5,
 )
 
+DEFAULT_ADVANCED_SETTINGS = AdvancedSettings(
+    auto_prefix=True,
+    implicit_more_expansion=True,
+    custom_prefix="",
+    limit=100,
+)
 
-def compose_query(
-    query: str,
-    more_of: str,
-    less_of: str,
-    favourites: List[str],
-    search_settings: SearchSettings = None,
-) -> Dict[str, float]:
-    if not search_settings:
-        search_settings = DEFAULT_SEARCH_SETTINGS
-
-    composed_query = {}
-    if query:
-        composed_query = {query: search_settings.query_weight}
-    if more_of:
-        more_term = query + ", " + more_of
-        composed_query[more_term] = search_settings.pos_query_weight
-    if less_of:
-        composed_query[less_of] = search_settings.neg_query_weight
-
-    total_fav_weight = search_settings.total_favourite_weight
-    for favourite in favourites:
-        composed_query[favourite] = total_fav_weight / len(favourites)
-
-    if not composed_query:
-        composed_query = {"": 1.0}
-    return composed_query
+STYLE_MAPPING = {
+    "formal": "A sophisticated and elegant <QUERY> suitable for formal occasions",
+    "streetwear": "A trendy and urban <QUERY> inspired by street fashion trends",
+    "casual": "A comfortable and relaxed <QUERY> for everyday wear",
+    "sporty": "An athletic and functional <QUERY> for sports and active lifestyles",
+    "bohemian": "An eclectic and free-spirited <QUERY> with a boho-chic vibe",
+    "business": "A professional and polished <QUERY> for a business setting",
+    "vintage": "A retro-inspired <QUERY> with a nostalgic feel",
+    "beachwear": "A breezy and summery <QUERY> perfect for beach outings",
+    "evening": "An elegant <QUERY> suitable for evening events and parties",
+    "minimalist": "A simple and clean <QUERY> with a minimalist design",
+    "workout": "A durable and supportive <QUERY> for gym or home workouts",
+    "outdoor": "A rugged and durable <QUERY> for outdoor activities",
+    "lounge": "A cozy and soft <QUERY> for lounging at home",
+    "party": "A festive and eye-catching <QUERY> for parties and celebrations",
+    "preppy": "A classic and smart <QUERY> with a preppy style",
+    "glam": "A glamorous and shiny <QUERY> for a standout look",
+    "festival": "A bold and colorful <QUERY> perfect for music festivals",
+    "holiday": "A festive <QUERY> ideal for holiday celebrations",
+    "winter": "A warm and insulated <QUERY> for cold winter days",
+    "summer": "A light and airy <QUERY> for hot summer days",
+}
 ```
+The `DEFAULT_SEARCH_SETTINGS` and `DEFAULT_ADVANCED_SETTINGS` are configurable in the UI, however the `STYLE_MAPPING` and `QUERY_PREFIX` are not. You can change these to customise the behaviour of the search. Experiment with adding different styles, modifying existing ones, or changing the prefix.
 
-The weights in search settings are configurable via the UI however you can experiment with changing the function to explore different behaviours.
-
-For example, you could change the `more_term` construction. Currently it will also include the main query, this is done to avoid a query for `watch` with more of `gold` getting divereted away from watch and towards gold. Try removing this to see the behaviour without it.
-
-You could also experiment with how favourites are handled by modifying the contributes for text and image favourites separately.
-
-You can also add implicit query expansions, for example every query could have a negative weight on `bad, ai generated, weird` to avoid these images in all searches without the user having to specify this.
 
 #### Adding score modifiers
 
-Marqo support score modifiers, these allow you to change to ranking of the results using attributes of the documents. For example, you could boost the score for results where the seller is reputable or where the product is popular.
+Head to the `./e-commerce-demo/backend/marqo_search.py` file.
+
+Marqo supports score modifiers, these allow you to change to ranking of the results using attributes of the documents. For example, you could boost the score for results where the seller is reputable or where the product is popular.
 
 For the demo we can boost works using their aesthetic score. In the `search` function we can add score modifiers as follows:
 
@@ -210,7 +211,7 @@ def search(
     ...
 ```
 
-You can experiment with different weight to see how it impacts the search.
+You can experiment with different weights to see how it impacts the search.
 
 ## Deployment
 
