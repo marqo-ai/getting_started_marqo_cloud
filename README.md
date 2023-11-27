@@ -29,44 +29,44 @@ Head to your cloud console and [sign in](https://cloud.marqo.ai). This will brin
 
 Note: you will not incur any costs on your Marqo account unless you create an index so you can follow along with this section and cancel the creation at the end to avoid any costs.
 
-You can navigate to your indexes but clicking on the indexes tab on the left nav bar.
+You can navigate to your indexes by clicking on the indexes tab on the left nav bar.
 
 ![Index tab on nav bar](./assets/sidebar_indexes.png)
 
-This will bring you to the indexes page, here you can view and managed your indexes once they have been created.
+This will bring you to the indexes page, here you can view and manage your indexes once they have been created. 
 
 To create a new index, click the create index button.
 
 ![Create index button](./assets/indexes_pre_creation_button_highlight.png)
 
-You can now configure the index as needed for your application. We will talk through what each of these sections mean in the following sections. The screen will look like this.
+You can now configure the index as needed for your application. We will talk through what each of these options mean in the following sections. The screen will look like this.
 
 ![Create index page](./assets/create_index.PNG)
 
 ### Index name
 
-This is self explanatory. This will be the name of your index. You will use this name to reference you index in your code and it will be displayed in the console. 
+This is self explanatory. This will be the name of your index. You will use this name to reference your index in your code and it will be displayed in the console. 
 
 <!-- Your index names must be unique within your account. -->
 
 ### Indexing mode
 
-The indexing mode is effectively a shorthand for your index configuration. Choosing `Text-optimised` (the default) will automatically choose a model that is suitable for indexing text-only data. Likewise, choosing `Image-compatible` will choose a model that is suitable for indexing text and images. You can view these index settings in detail under the `Hide advanced details` accordion above the estimated cost.
+The indexing mode is effectively a shorthand for your index configuration. Choosing `Text-optimised` (the default) will automatically choose a model that is suitable for indexing text-only data. Likewise, choosing `Image-compatible` will choose a model that is suitable for indexing text and images. You can view these index settings in detail under the `advanced details` accordion above the estimated cost.
 
 ### Storage shard type
 
 The storage shard type is the type of storage that will hold your vectors. The storage pod indexes your vectors (which are created by the inference pods) and searches them. There are three storage shard types available:
 
 + `marqo.basic`
-    + Marqo basic is the cheapest of the shard types. This is good for proof of concept applications and development work. These shards have higher search latency that the other options and each shard has a lower capacity of approximately 2 million vectors. These shards cannot have any replicas either so they are note recommended for production applications where high availability is a requirement.
+    + Marqo basic is the cheapest of the shard types. This is good for proof of concept applications and development work. These shards have higher search latency than the other options and each shard has a lower capacity of approximately 2 million vectors. These shards cannot have any replicas either so they are not recommended for production applications where high availability is a requirement.
 + `marqo.balanced`
     + Marqo balanced is the middle tier of the shard types. This is good for production applications where high availability is a requirement. These shards have lower search latency than `marqo.basic` and each shard has a higher capacity of approximately 16 million vectors. These shards can have replicas so they are suitable for production applications where high availability is a requirement.
 + `marqo.performance`
-    + Marqo performance is the highest tier of the shard types. This is good for production applications where high availability and the lowest search latency is a requirement, especially for indexes with tens or hundreds of millions of vectors. These shards have the lowest search latency of all the shard types and each shard has a capacity of approximately 16 million vectors. These shards can have replicas so they are suitable for highly available production application with millions of users.
+    + Marqo performance is the highest tier of the shard types. This is good for production applications where high availability and the lowest search latency is a requirement, especially for indexes with tens or hundreds of millions of vectors. These shards have the lowest search latency of all the shard types and each shard has a capacity of approximately 16 million vectors. These shards can have replicas so they are suitable for highly available production application with millions of users. 
 
-For the tutorials in this getting started guide we will only use `marqo.basic` shards however if you are deploying a production search with many users we recommend using `marqo.balanced`. For larger enterprises with large number of concurrent searches a `marqo.performance` shard is likely more suitable.
+For the tutorials in this getting started guide we will only use `marqo.basic` shards however if you are deploying a production search with many users we recommend using `marqo.balanced`. For larger enterprises with a large number of concurrent searches a `marqo.performance` shard is likely more suitable.
 
-The shard type, number of shards, and number of replicas you pick in index creation will be fixed. To try a different configuration for these values you will need to create a new index.
+The shard type, number of shards, and number of replicas you pick at index creation will be fixed. To try a different configuration for these values you will need to create a new index.
 
 ### Inference pod type
 
@@ -83,9 +83,9 @@ A common usage pattern is to mix these nodes for different stages of development
 
 ### Number of shards, replicas, and pods
 
-This will configure how many instances of the storage and inference classes will be created. Each shard is an instance of your storage type and will multiply the cost of the storage type by each shard. Each replica will contain all your shards and thus multiplies the cost of all your shards. Replicas increase availability and also reduce latency as the search traffic can be balanced across your replicas. For production applications at least one replicas is recommended.
+This will configure how many instances of the storage and inference classes will be created. Each shard is an instance of your storage type and will multiply the cost of the storage type by each shard. Each replica will contain all of your shards and thus multiplies the cost of all of your shards. Replicas increase availability and also reduce latency as the search traffic can be balanced across your replicas. For production applications at least one replicas is recommended.
 
-The number of inference pods will multiply the cost of your inference pod type by the number of pods. This will increase the speed of indexing and searching as the load can be balanced across your pods. You can scale down to zero to remove your inference costs however you index cannot be accessed programmatically while there are no inference pods. A higher number of inference pods will help in applications with high request concurrency. For many applications one or two pods will be sufficient.
+The number of inference pods will multiply the cost of your inference pod type by the number of pods. This will increase the speed of indexing and searching as the load can be balanced across your pods. You can scale down to zero to remove your inference costs however your index cannot be accessed programmatically while there are no inference pods. A higher number of inference pods will help in applications with high request concurrency. For many applications one or two pods will be sufficient.
 
 ### Advanced details
 
@@ -97,17 +97,17 @@ For a list of all available models please [refer to our documentation](https://d
 
 ### Create index
 
-Once you are done with configuration you can create your index by clicking "Create Index" at the bottom. This will take you to the index page where you can see your index being created. This will take a few minutes to complete. You can refresh the page to see the status of your index. Once it is ready you will be able to use it.
+Once you are done with configuration you can create your index by clicking "Create Index" at the bottom. This will take you to the index page where you can see your index being created. This will take a few minutes to complete. You can refresh the page to see the status of your index. Once it is ready you will be able to use it. 
 
 For now you can click cancel and return to this page when you are ready to follow one of the tutorials in this guide or to build your own application.
 
 ### Endpoints
 
-Once you have made an index and its creation has completed (usually about 10 minutes) you will be able to copy its endpoint URL from the indexes page on the console. You can either use the URL for each index or you can use `https://api.marqo.ai` in the Python client and it will fetch the index endpoints for you.
+Once index creation has completed (usually about 10 minutes) you will be able to copy its endpoint URL from the indexes page on the console. You can either use the URL for each index or you can use `https://api.marqo.ai` in the Python client and it will fetch the index endpoints for you.
 
 ### Testing your endpoint
 
-If you have created an index you can check that it is up and running via the `/indexes` endpoint. You will need to have created and index and given the inference pods time to finish initializing as described in the previous steps. You can check your indexes via Python as follows.
+If you have created an index you can check that it is up and running via the `/indexes` endpoint. You will need to have created an index and given the inference pods time to finish initializing as described in the previous steps. You can check your indexes via Python as follows.
 
 ```python
 import marqo
@@ -137,7 +137,7 @@ You can managed your API keys in the API Keys tab on the left nav bar. You will 
 
 ## Managing Team Members
 
-You can manage team members by heading to the Team Members tab in the left nav bar. You can invite new team members by clicking the New Member button at the top right. You can also remove team members from this page.
+You can manage team members by heading to the Team Members tab in the left nav bar. You can invite new team members by clicking the New Member button at the top right. You can also remove team members from this page. 
 
 New members will be sent an email inviting them to your account, this will provide them with full access to the console. You can revoke access by removing them from the team members page.
 
