@@ -89,11 +89,11 @@ The number of inference pods will multiply the cost of your inference pod type b
 
 ### Advanced details
 
-You can also edit your index configuration with the advanced details section. For details on the index default object please [refer to our documentation](https://docs.marqo.ai/latest/API-Reference/indexes/#index-defaults-object). 
+You can also edit your index configuration with the advanced details section. For details on the index default object please [refer to our documentation](https://docs.marqo.ai/latest/API-Reference/Indexes/create_index/). 
 
 The most common change you will likely want to make here is to change the model you are using. For example if you are indexing text data and want higher relevancy in exchange for higher latency you could configure `"model": "hf/e5-large"` which has a larger embedding space of 1024 dimensions and benchmarks better on retrieval benchmarks than the default model however inference search both take longer due to its increased size. 
 
-For a list of all available models please [refer to our documentation](https://docs.marqo.ai/latest/Models-Reference/dense_retrieval/).
+For a list of all available models please [refer to our documentation](https://docs.marqo.ai/latest/Guides/Models-Reference/dense_retrieval/).
 
 ### Create index
 
